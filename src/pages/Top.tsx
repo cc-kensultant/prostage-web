@@ -1,11 +1,20 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import useSWR from 'swr'
+import { fetcher } from '../utils/fetcher'
+
+type SampleData = {
+  employee_name: string,
+  employee_salary: number,
+}
 
 const style = css`
   color: red;
 `
 
 const Top = () => {
+  const { data } = useSWR('https://dummy.restapiexample.com/api/v1/employees', fetcher)
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +30,14 @@ const Top = () => {
           Learn React
         </a>
       </header>
+      <ul>
+        {data && data.data.map((d: SampleData) => (
+          <li key={d.employee_name}>
+            <p>{d.employee_name}</p>
+            <p>{d.employee_salary}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
