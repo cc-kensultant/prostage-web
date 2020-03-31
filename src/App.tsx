@@ -6,7 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Top from './pages/Top'
+import { Top } from './pages/Top'
 
 import { jsx, css } from '@emotion/core'
 const style = css`

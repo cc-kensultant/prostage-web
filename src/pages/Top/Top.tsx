@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import useSWR from 'swr'
-import { fetcher } from '../utils/fetcher'
+import { fetcher } from '../../utils/fetcher'
+import { Hello } from '../../components/Hello'
 
-type SampleData = {
+export type SampleData = {
   employee_name: string,
   employee_salary: number,
 }
@@ -12,7 +13,7 @@ const style = css`
   color: red;
 `
 
-const Top = () => {
+export const Top = () => {
   const { data } = useSWR('https://dummy.restapiexample.com/api/v1/employees', fetcher)
   
   return (
@@ -38,8 +39,9 @@ const Top = () => {
           </li>
         ))}
       </ul>
+      <Hello>
+        <p>Hello</p>
+      </Hello>
     </div>
   );
 }
-
-export default Top

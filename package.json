@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-emotion": "^10.0.29"
+    "babel-plugin-emotion": "^10.0.29",
+    "scaffdog": "^0.2.0"
   }
 }
