@@ -6,39 +6,18 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import logo from './logo.svg';
 import './App.css';
+import Top from './pages/Top'
 
 import { jsx, css } from '@emotion/core'
 const style = css`
   color: red;
 `
 
-const Home = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p css={style}>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
 const About = () => {
   return (
     <div>
-      <h2>About</h2>
+      <h2 css={style}>About</h2>
     </div>
   );
 }
@@ -57,7 +36,7 @@ const App = () => {
       <div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Top</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -78,7 +57,7 @@ const App = () => {
         */}
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Top />
           </Route>
           <Route path="/about">
             <About />
