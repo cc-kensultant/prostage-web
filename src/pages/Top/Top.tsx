@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { Helmet } from "react-helmet";
 import { jsx, css } from '@emotion/core'
 import useSWR from 'swr'
 import { fetcher } from '../../utils/fetcher'
@@ -18,15 +19,16 @@ export const Top = () => {
   
   return (
     <div className="App">
+      <Helmet>
+        <title>Prostage | TOP</title>
+      </Helmet>
       <header className="App-header">
-        <p css={style}>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
+          css={style}
         >
           Learn React
         </a>
