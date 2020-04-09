@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-var": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all",
+        "endOfLine": "lf",
+        "semi": false,
+        "singleQuote": true,
+        "printWidth": 100,
+        "tabWidth": 2
+      }
+    ]
+  }
+}
