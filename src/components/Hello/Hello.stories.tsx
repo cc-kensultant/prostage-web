@@ -1,6 +1,9 @@
 import React from 'react'
-// eslint-disable-next-line no-unused-vars
+
+/* eslint-disable */
 import { action } from '@storybook/addon-actions'
+/* eslint-disable */
+
 import { Hello } from './Hello'
 
 export default {
@@ -9,7 +12,7 @@ export default {
 }
 
 export const Default = () => (
-  <Hello>
+  <Hello name="Hoge">
     <p>dataX</p>
   </Hello>
 )

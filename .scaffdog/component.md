@@ -35,15 +35,20 @@ export const {{ input | pascal }} = ({ children }: Props) => (
 # `{{ input | pascal }}/{{ input | pascal }}.stories.tsx`
 
 ```javascript
-import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import { action } from '@storybook/addon-actions';
-import { Hello } from './Hello';
+import React from 'react'
+
+/* eslint-disable */
+import { action } from '@storybook/addon-actions'
+/* eslint-disable */
+
+import { {{ input | pascal }} } from './{{ input | pascal }}'
 
 export default {
-  title: 'Hello',
-  component: Hello,
-};
+  title: '{{ input | pascal }}',
+  component: {{ input | pascal }},
+}
 
-export const Default = () => <Hello><p>dataX</p></Hello>;
+export const Default = () => (
+  <{{ input | pascal }}><p>dataX</p></{{ input | pascal }}>
+)
 ```
