@@ -7,13 +7,13 @@ output: '**/*'
 ignore: []
 ---
 
-# `{{ input | pascal }}/index.ts`x
+# `{{ input | pascal }}/index.tsx`
 
 ```javascript
 export { {{ input | pascal }} } from './{{ input | pascal }}';
 ```
 
-# `{{ input | pascal }}/{{ input | pascal }}.ts`x
+# `{{ input | pascal }}/{{ input | pascal }}.tsx`
 
 ```javascript
 /** @jsx jsx */
