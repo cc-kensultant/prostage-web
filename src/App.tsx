@@ -1,16 +1,13 @@
 /** @jsx jsx */
 // import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Top } from './pages/Top'
 
 import { jsx, css } from '@emotion/core'
+
 const style = css`
   color: red;
+  border: 2px solid #fff;
 `
 
 const About = () => {
@@ -18,7 +15,7 @@ const About = () => {
     <div>
       <h2 css={style}>About</h2>
     </div>
-  );
+  )
 }
 
 const Dashboard = () => {
@@ -26,7 +23,7 @@ const Dashboard = () => {
     <div>
       <h2>Dashboard</h2>
     </div>
-  );
+  )
 }
 
 const App = () => {
@@ -67,7 +64,7 @@ const App = () => {
         </Switch>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

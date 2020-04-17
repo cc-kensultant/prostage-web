@@ -1,13 +1,13 @@
 /** @jsx jsx */
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet'
 import { jsx, css } from '@emotion/core'
 import useSWR from 'swr'
 import { fetcher } from '../../utils/fetcher'
 import { Hello } from '../../components/Hello'
 
 export type SampleData = {
-  employee_name: string,
-  employee_salary: number,
+  employee_name: string
+  employee_salary: number
 }
 
 const style = css`
@@ -16,7 +16,7 @@ const style = css`
 
 export const Top = () => {
   const { data } = useSWR('https://dummy.restapiexample.com/api/v1/employees', fetcher)
-  
+
   return (
     <div className="App">
       <Helmet>
@@ -34,16 +34,17 @@ export const Top = () => {
         </a>
       </header>
       <ul>
-        {data && data.data.map((d: SampleData) => (
-          <li key={d.employee_name}>
-            <p>{d.employee_name}</p>
-            <p>{d.employee_salary}</p>
-          </li>
-        ))}
+        {data &&
+          data.data.map((d: SampleData) => (
+            <li key={d.employee_name}>
+              <p>{d.employee_name}</p>
+              <p>{d.employee_salary}</p>
+            </li>
+          ))}
       </ul>
       <Hello>
         <p>Hello</p>
       </Hello>
     </div>
-  );
+  )
 }
