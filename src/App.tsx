@@ -1,14 +1,14 @@
 /** @jsx jsx */
-// import React from 'react';
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { GlobalMenu } from './components/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
 import firebase from './utils/firebase'
-
+/* eslint-disable */
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { jsx, css } from '@emotion/core'
+/* eslint-disable */
 
 const App = () => {
   const [user, setUser] = useState(false)
@@ -20,10 +20,8 @@ const App = () => {
     // マウント時セッション確認
     firebase.auth().onAuthStateChanged(function (userData) {
       if (userData) {
-        console.log('ログイン済み')
         setUser(true)
       } else {
-        console.log('未ログイン')
         setUser(false)
       }
     })
@@ -45,7 +43,7 @@ const App = () => {
             <Top />
           </Route>
           <Route exact path="/SignIn">
-            <SignIn />
+            <SignIn setUserState={setUserState} />
           </Route>
           <Route exact path="/SignUp">
             <SignUp setUserState={setUserState} />

@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
+/* eslint-disable */
 import useSWR from 'swr'
 import { fetcher } from '../../utils/fetcher'
+/* eslint-disable */
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
 import { useHistory } from 'react-router-dom'
@@ -162,6 +164,7 @@ const card = {
     },
   `,
   btnDisable: css`
+    border: unset !important;
     opacity: 0.4 !important;
     cursor: default !important;
     &:hover {
@@ -260,7 +263,7 @@ const card = {
     cursor: default;
   `,
   signinSpan: css`
-    margin-left: 12px;
+    margin-left: 4px;
     color: #2f80ed;
     cursor: pointer;
   `,
@@ -268,7 +271,6 @@ const card = {
 
 /** script */
 export const SignUp: FC<AppProps> = ({ setUserState }) => {
-  const { data } = useSWR('dummy', fetcher)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -286,18 +288,16 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(state.email, state.pass)
-      .then((res: any) => {
+      .then(() => {
         // 正常終了時
-        console.log(res)
         // TODO:トースト通知など検討
         alert('アカウント登録に成功しました。')
         setUserState(true)
         // Topに移動(仮)
         history.push('/')
       })
-      .catch((error: any) => {
+      .catch(() => {
         // 異常終了時
-        console.log(error)
         // TODO:トースト通知など検討
         alert('アカウント登録に失敗しました。')
       })
@@ -330,7 +330,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
           />
           <div>
             <input
-              type="text"
+              type="password"
               name="pass"
               value={state.pass}
               onChange={handleChange}
@@ -340,7 +340,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
           </div>
           <div>
             <input
-              type="text"
+              type="password"
               name="passConf"
               value={state.passConf}
               onChange={handleChange}
@@ -382,7 +382,10 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
         </div>
         {/* ログイン案内 */}
         <div css={card.signinInfo}>
-          すでにアカウントをお持ちですか？<span css={card.signinSpan}>ログイン</span>
+          すでにアカウントをお持ちですか？
+          <span css={card.signinSpan} onClick={() => history.push('/SignIn')}>
+            ログイン
+          </span>
         </div>
       </div>
     </div>

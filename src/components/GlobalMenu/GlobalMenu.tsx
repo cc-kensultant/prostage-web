@@ -91,9 +91,6 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
             alert('ログアウトしました')
             setUserState(false)
           })
-      } else {
-        alert('ログアウト済みです')
-        setUserState(false)
       }
     })
   }
