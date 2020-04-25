@@ -42,7 +42,7 @@ export const Top = () => {
             </li>
           ))}
       </ul>
-      <Hello>
+      <Hello name="top">
         <p>Hello</p>
       </Hello>
     </div>

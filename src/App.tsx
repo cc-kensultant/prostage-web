@@ -1,49 +1,19 @@
 /** @jsx jsx */
 // import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { GlobalMenu } from './components/GlobalMenu'
 import { Top } from './pages/Top'
+import { SignIn } from './pages/SignIn'
+import { SignUp } from './pages/SignUp'
 
 import { jsx, css } from '@emotion/core'
-
-const style = css`
-  color: red;
-  border: 2px solid #fff;
-`
-
-const About = () => {
-  return (
-    <div>
-      <h2 css={style}>About</h2>
-    </div>
-  )
-}
-
-const Dashboard = () => {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  )
-}
 
 const App = () => {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Top</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-
-        <hr />
-
+        <GlobalMenu />
+        {/* メインコンテンツ */}
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
@@ -55,11 +25,11 @@ const App = () => {
           <Route exact path="/">
             <Top />
           </Route>
-          <Route path="/about">
-            <About />
+          <Route exact path="/SignIn">
+            <SignIn />
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route exact path="/SignUp">
+            <SignUp />
           </Route>
         </Switch>
       </div>
