@@ -3,7 +3,10 @@ import { jsx, css } from '@emotion/core'
 import useSWR from 'swr'
 import { fetcher } from '../../utils/fetcher'
 import { useState } from 'react'
+import firebase from '../../utils/firebase'
+import { useHistory } from 'react-router-dom'
 
+/** css */
 const signup = {
   base: css`
     width: 100%;
@@ -258,6 +261,7 @@ const card = {
   `,
 }
 
+/** script */
 export const SignUp = () => {
   const { data } = useSWR('dummy', fetcher)
   const [state, setState] = useState({
@@ -265,6 +269,7 @@ export const SignUp = () => {
     pass: '',
     passConf: '',
   })
+  const history = useHistory()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.value })
   }
@@ -273,7 +278,23 @@ export const SignUp = () => {
   }
   const onSubmit = () => {
     if (!validation()) return
-    console.log(state)
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(state.email, state.pass)
+      .then((res: any) => {
+        // 正常終了時
+        console.log(res)
+        // TODO:トースト通知など検討
+        alert('アカウント登録に成功しました。')
+        // Topに移動(仮)
+        history.push('/')
+      })
+      .catch((error: any) => {
+        // 異常終了時
+        console.log(error)
+        // TODO:トースト通知など検討
+        alert('アカウント登録に失敗しました。')
+      })
   }
   return (
     <div css={signup.base}>
