@@ -1,18 +1,37 @@
 /** @jsx jsx */
 // import React from 'react';
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { GlobalMenu } from './components/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
+import firebase from './utils/firebase'
 
 import { jsx, css } from '@emotion/core'
 
 const App = () => {
+  const [user, setUser] = useState(false)
+  // ログイン状態更新
+  function setUserState(state: boolean) {
+    setUser(state)
+  }
+  useEffect(() => {
+    // マウント時セッション確認
+    firebase.auth().onAuthStateChanged(function (userData) {
+      if (userData) {
+        console.log('ログイン済み')
+        setUser(true)
+      } else {
+        console.log('未ログイン')
+        setUser(false)
+      }
+    })
+  })
   return (
     <Router>
       <div>
-        <GlobalMenu />
+        <GlobalMenu isSignin={user} setUserState={setUserState} />
         {/* メインコンテンツ */}
         {/*
           A <Switch> looks through all its children <Route>
@@ -29,7 +48,7 @@ const App = () => {
             <SignIn />
           </Route>
           <Route exact path="/SignUp">
-            <SignUp />
+            <SignUp setUserState={setUserState} />
           </Route>
         </Switch>
       </div>

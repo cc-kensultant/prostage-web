@@ -1,10 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { FC } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '../../utils/fetcher'
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
 import { useHistory } from 'react-router-dom'
+
+interface AppProps {
+  setUserState: (state: boolean) => void
+}
 
 /** css */
 const signup = {
@@ -262,7 +267,7 @@ const card = {
 }
 
 /** script */
-export const SignUp = () => {
+export const SignUp: FC<AppProps> = ({ setUserState }) => {
   const { data } = useSWR('dummy', fetcher)
   const [state, setState] = useState({
     email: '',
@@ -286,6 +291,7 @@ export const SignUp = () => {
         console.log(res)
         // TODO:トースト通知など検討
         alert('アカウント登録に成功しました。')
+        setUserState(true)
         // Topに移動(仮)
         history.push('/')
       })

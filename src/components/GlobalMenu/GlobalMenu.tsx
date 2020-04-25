@@ -2,6 +2,7 @@
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import firebase from '../..//utils/firebase'
 
 const head = {
   base: css`
@@ -68,10 +69,34 @@ const head = {
       background: #096DD9;
     },
   `,
+  hidden: css`
+    display: none !important;
+  `,
 }
 
-export const GlobalMenu: FC<{}> = () => {
+interface AppProps {
+  isSignin: boolean
+  setUserState: (state: boolean) => void
+}
+
+export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
   const history = useHistory()
+  function signOut() {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            alert('ログアウトしました')
+            setUserState(false)
+          })
+      } else {
+        alert('ログアウト済みです')
+        setUserState(false)
+      }
+    })
+  }
   return (
     <div css={head.base}>
       {/* ロゴ */}
@@ -86,13 +111,17 @@ export const GlobalMenu: FC<{}> = () => {
       {/* 法人プラン */}
       <div css={head.plan}>法人プラン</div>
       {/* ログイン */}
-      <Link to="/SignIn" css={head.signin}>
+      <Link to="/SignIn" css={isSignin ? head.hidden : head.signin}>
         ログイン
       </Link>
       {/* 無料会員登録 */}
-      <button css={head.btn} onClick={() => history.push('/SignUp')}>
+      <button css={isSignin ? head.hidden : head.btn} onClick={() => history.push('/SignUp')}>
         無料会員登録
       </button>
+      {/* ログアウト */}
+      <div css={isSignin ? head.signin : head.hidden} onClick={signOut}>
+        ログアウト
+      </div>
     </div>
   )
 }
