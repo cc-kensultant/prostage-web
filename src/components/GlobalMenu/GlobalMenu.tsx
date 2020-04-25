@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { FC } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
 const head = {
   base: css`
@@ -68,20 +68,10 @@ const head = {
       background: #096DD9;
     },
   `,
-  hiddenLink: css`
-    display: none;
-  `,
 }
 
 export const GlobalMenu: FC<{}> = () => {
-  // toアカウント登録ページ TODO:history.push使いたい
-  const toTop = () => {
-    document.getElementById('head-to-top-page')?.click()
-  }
-  // toアカウント登録ページ TODO:history.push使いたい
-  const toSignUp = () => {
-    document.getElementById('head-to-signup-btn')?.click()
-  }
+  const history = useHistory()
   return (
     <div css={head.base}>
       {/* ロゴ */}
@@ -89,9 +79,8 @@ export const GlobalMenu: FC<{}> = () => {
         src={`${process.env.PUBLIC_URL}/ProstageLogo.svg`}
         alt="Prostage"
         css={head.img}
-        onClick={toTop}
+        onClick={() => history.push('/')}
       />
-      <Link id="head-to-top-page" to="/" css={head.hiddenLink} />
       {/* スペーサー */}
       <div css={head.space} />
       {/* 法人プラン */}
@@ -101,10 +90,9 @@ export const GlobalMenu: FC<{}> = () => {
         ログイン
       </Link>
       {/* 無料会員登録 */}
-      <button css={head.btn} onClick={toSignUp}>
+      <button css={head.btn} onClick={() => history.push('/SignUp')}>
         無料会員登録
       </button>
-      <Link id="head-to-signup-btn" to="/SignUp" css={head.hiddenLink} />
     </div>
   )
 }
