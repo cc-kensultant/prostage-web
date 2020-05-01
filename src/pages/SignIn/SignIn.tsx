@@ -4,6 +4,10 @@ import { FC } from 'react'
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
+import Cancel from '../../image/Cancel.svg'
+import GoogleLogo from '../../image/GoogleLogo.svg'
+import FacebookLogo from '../../image/FacebookLogo.svg'
+import TwitterLogo from '../../image/TwitterLogo.svg'
 
 interface AppProps {
   setUserState: (state: boolean) => void
@@ -336,7 +340,7 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
       <article css={card.base}>
         {/* ×ボタン */}
         <button css={card.cancelBase}>
-          <img src={`${process.env.PUBLIC_URL}/Cancel.svg`} alt="キャンセル" />
+          <img src={Cancel} alt="キャンセル" />
         </button>
         {/* 見出し */}
         <h1 css={card.title}>ログイン</h1>
@@ -384,25 +388,17 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
         <ul css={card.iconsBase}>
           <li css={card.google}>
             <button>
-              <img src={`${process.env.PUBLIC_URL}/GoogleLogo.svg`} alt="Google" css={card.image} />
+              <img src={GoogleLogo} alt="Google" css={card.image} />
             </button>
           </li>
           <li css={card.facebook}>
             <button>
-              <img
-                src={`${process.env.PUBLIC_URL}/FacebookLogo.svg`}
-                alt="Facebook"
-                css={card.image}
-              />
+              <img src={FacebookLogo} alt="Facebook" css={card.image} />
             </button>
           </li>
           <li css={card.twitter}>
             <button>
-              <img
-                src={`${process.env.PUBLIC_URL}/TwitterLogo.svg`}
-                alt="Twitter"
-                css={card.image}
-              />
+              <img src={TwitterLogo} alt="Twitter" css={card.image} />
             </button>
           </li>
         </ul>

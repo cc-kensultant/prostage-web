@@ -2,7 +2,8 @@
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import firebase from '../..//utils/firebase'
+import firebase from '../../utils/firebase'
+import ProstageLogo from '../..//image/ProstageLogo.svg'
 
 const head = {
   base: css`
@@ -156,7 +157,7 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
         {/* ロゴ */}
         <li css={head.img}>
           <Link to="">
-            <img src={`${process.env.PUBLIC_URL}/ProstageLogo.svg`} alt="Prostage" />
+            <img src={ProstageLogo} alt="Prostage" />
           </Link>
         </li>
         {/* 法人プラン */}
