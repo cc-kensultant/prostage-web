@@ -39,10 +39,10 @@ const App = () => {
         <Route exact path="/">
           <Top />
         </Route>
-        <Route exact path="/SignIn">
+        <Route exact path="/sign-in">
           <SignIn setUserState={setUserState} />
         </Route>
-        <Route exact path="/SignUp">
+        <Route exact path="/sign-up">
           <SignUp setUserState={setUserState} />
         </Route>
       </Switch>

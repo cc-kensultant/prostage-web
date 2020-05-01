@@ -41,11 +41,11 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
         </li>
         {/* ログイン */}
         <li css={isSignin ? styles.hidden : styles.signin}>
-          <Link to="/SignIn">ログイン</Link>
+          <Link to="/sign-in">ログイン</Link>
         </li>
         {/* 無料会員登録 */}
         <li css={isSignin ? styles.hidden : styles.btn}>
-          <button onClick={() => history.push('/SignUp')}>無料会員登録</button>
+          <button onClick={() => history.push('/sign-up')}>無料会員登録</button>
         </li>
         <li css={isSignin ? styles.signout : styles.hidden}>
           {/* ログアウト */}

@@ -116,7 +116,7 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
         {/* ログイン案内 */}
         <p css={card.signupInfo}>
           アカウントをお持ちでないですか？
-          <Link css={card.signupLink} to="/SignUp">
+          <Link css={card.signupLink} to="/sign-up">
             新規登録
           </Link>
         </p>

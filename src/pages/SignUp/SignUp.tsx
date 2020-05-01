@@ -124,7 +124,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
         {/* ログイン案内 */}
         <p css={card.signinInfo}>
           すでにアカウントをお持ちですか？
-          <Link css={card.signinLink} to="/SignIn">
+          <Link css={card.signinLink} to="/sign-in">
             ログイン
           </Link>
         </p>
