@@ -13,8 +13,8 @@ interface AppProps {
 /** script */
 export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
   const history = useHistory()
-  function signOut() {
-    firebase.auth().onAuthStateChanged(function (user) {
+  const signOut = () => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         firebase
           .auth()

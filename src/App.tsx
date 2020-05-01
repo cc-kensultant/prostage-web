@@ -11,12 +11,12 @@ import { jsx } from '@emotion/core'
 const App = () => {
   const [user, setUser] = useState(false)
   // ログイン状態更新
-  function setUserState(state: boolean) {
+  const setUserState = (state: boolean) => {
     setUser(state)
   }
   useEffect(() => {
     // マウント時セッション確認
-    firebase.auth().onAuthStateChanged(function (userData) {
+    firebase.auth().onAuthStateChanged((userData) => {
       if (userData) {
         setUser(true)
       } else {

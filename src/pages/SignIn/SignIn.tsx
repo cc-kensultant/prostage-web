@@ -23,7 +23,7 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.value })
   }
-  function validation() {
+  const validation = () => {
     return state.email && state.pass
   }
   const onSubmit = () => {
