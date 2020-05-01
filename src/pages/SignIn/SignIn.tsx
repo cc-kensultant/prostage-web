@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 import { useState } from 'react'
-import firebase from '../../utils/firebase'
+import { firebase } from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'

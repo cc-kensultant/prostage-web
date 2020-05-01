@@ -4,7 +4,7 @@ import { GlobalMenu } from './components/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
-import firebase from './utils/firebase'
+import { firebase } from './utils/firebase'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { jsx } from '@emotion/core'
 

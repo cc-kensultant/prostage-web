@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import firebase from '../../utils/firebase'
+import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 
 interface AppProps {

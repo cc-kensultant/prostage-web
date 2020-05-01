@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app'
+import * as firebaseApp from 'firebase/app'
 import 'firebase/auth'
 
 const config = {
@@ -10,6 +10,4 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 }
 
-firebase.initializeApp(config)
-
-export default firebase
+export const firebase = firebaseApp.initializeApp(config)
