@@ -5,6 +5,58 @@ import { Link, useHistory } from 'react-router-dom'
 import firebase from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 
+interface AppProps {
+  isSignin: boolean
+  setUserState: (state: boolean) => void
+}
+
+/** script */
+export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
+  const history = useHistory()
+  function signOut() {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            alert('ログアウトしました')
+            setUserState(false)
+          })
+      }
+    })
+  }
+  return (
+    <header css={head.base}>
+      <ul id="nav" css={head.nav}>
+        {/* ロゴ */}
+        <li css={head.img}>
+          <Link to="">
+            <img src={ProstageLogo} alt="Prostage" />
+          </Link>
+        </li>
+        {/* 法人プラン */}
+        <li css={head.plan}>
+          <Link to="/">法人プラン</Link>
+        </li>
+        {/* ログイン */}
+        <li css={isSignin ? head.hidden : head.signin}>
+          <Link to="/SignIn">ログイン</Link>
+        </li>
+        {/* 無料会員登録 */}
+        <li css={isSignin ? head.hidden : head.btn}>
+          <button onClick={() => history.push('/SignUp')}>無料会員登録</button>
+        </li>
+        <li css={isSignin ? head.signout : head.hidden}>
+          {/* ログアウト */}
+          <button onClick={signOut}>ログアウト</button>
+        </li>
+      </ul>
+    </header>
+  )
+}
+
+/** css */
 const head = {
   base: css`
     position: sticky;
@@ -129,54 +181,4 @@ const head = {
       }
     }
   `,
-}
-
-interface AppProps {
-  isSignin: boolean
-  setUserState: (state: boolean) => void
-}
-
-export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
-  const history = useHistory()
-  function signOut() {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            alert('ログアウトしました')
-            setUserState(false)
-          })
-      }
-    })
-  }
-  return (
-    <header css={head.base}>
-      <ul id="nav" css={head.nav}>
-        {/* ロゴ */}
-        <li css={head.img}>
-          <Link to="">
-            <img src={ProstageLogo} alt="Prostage" />
-          </Link>
-        </li>
-        {/* 法人プラン */}
-        <li css={head.plan}>
-          <Link to="/">法人プラン</Link>
-        </li>
-        {/* ログイン */}
-        <li css={isSignin ? head.hidden : head.signin}>
-          <Link to="/SignIn">ログイン</Link>
-        </li>
-        {/* 無料会員登録 */}
-        <li css={isSignin ? head.hidden : head.btn}>
-          <button onClick={() => history.push('/SignUp')}>無料会員登録</button>
-        </li>
-        <li css={isSignin ? head.signout : head.hidden}>
-          {/* ログアウト */}
-          <button onClick={signOut}>ログアウト</button>
-        </li>
-      </ul>
-    </header>
-  )
 }

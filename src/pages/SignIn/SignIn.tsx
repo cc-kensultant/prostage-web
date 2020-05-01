@@ -13,6 +13,118 @@ interface AppProps {
   setUserState: (state: boolean) => void
 }
 
+/** script */
+export const SignIn: FC<AppProps> = ({ setUserState }) => {
+  const [state, setState] = useState({
+    email: '',
+    pass: '',
+  })
+  const history = useHistory()
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.value })
+  }
+  function validation() {
+    return state.email && state.pass
+  }
+  const onSubmit = () => {
+    if (!validation()) return
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(state.email, state.pass)
+      .then(() => {
+        // 正常終了時
+        // TODO:トースト通知など検討
+        alert('ログインに成功しました。')
+        setUserState(true)
+        // Topに移動(仮)
+        history.push('/')
+      })
+      .catch(() => {
+        // 異常終了時
+        // TODO:トースト通知など検討
+        alert('ログインに失敗しました。')
+      })
+  }
+  return (
+    <main css={signin.base}>
+      {/* TODO:↓ダイアログコンポーネント化？ */}
+      <article css={card.base}>
+        {/* ×ボタン */}
+        <button css={card.cancelBase}>
+          <img src={Cancel} alt="キャンセル" />
+        </button>
+        {/* 見出し */}
+        <h1 css={card.title}>ログイン</h1>
+        {/* フォーム */}
+        <form css={card.formBase}>
+          <input
+            type="text"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            css={card.email}
+            placeholder="メールアドレス"
+          />
+          <input
+            type="password"
+            name="pass"
+            value={state.pass}
+            onChange={handleChange}
+            css={card.pass}
+            placeholder="パスワード"
+          />
+          <button
+            type="button"
+            css={validation() ? card.btn : css(card.btn, card.btnDisable)}
+            tabIndex={validation() ? 0 : -1}
+            onClick={onSubmit}
+          >
+            ログイン
+          </button>
+        </form>
+        {/* パスワード忘れ */}
+        <p css={card.forgotInfo}>
+          パスワードをお忘れの場合は
+          <Link css={card.forgotLink} to="/">
+            こちら
+          </Link>
+        </p>
+        {/* または */}
+        <div css={card.hrBase}>
+          <hr css={card.hr} />
+          <div css={card.hrInfo}>または</div>
+          <hr css={card.hr} />
+        </div>
+        {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
+        <ul css={card.iconsBase}>
+          <li css={card.google}>
+            <button>
+              <img src={GoogleLogo} alt="Google" css={card.image} />
+            </button>
+          </li>
+          <li css={card.facebook}>
+            <button>
+              <img src={FacebookLogo} alt="Facebook" css={card.image} />
+            </button>
+          </li>
+          <li css={card.twitter}>
+            <button>
+              <img src={TwitterLogo} alt="Twitter" css={card.image} />
+            </button>
+          </li>
+        </ul>
+        {/* ログイン案内 */}
+        <p css={card.signupInfo}>
+          アカウントをお持ちでないですか？
+          <Link css={card.signupLink} to="/SignUp">
+            新規登録
+          </Link>
+        </p>
+      </article>
+    </main>
+  )
+}
+
 /** css */
 const signin = {
   base: css`
@@ -301,115 +413,4 @@ const card = {
       background: #f3f3f3;
     }
   `,
-}
-
-export const SignIn: FC<AppProps> = ({ setUserState }) => {
-  const [state, setState] = useState({
-    email: '',
-    pass: '',
-  })
-  const history = useHistory()
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.value })
-  }
-  function validation() {
-    return state.email && state.pass
-  }
-  const onSubmit = () => {
-    if (!validation()) return
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(state.email, state.pass)
-      .then(() => {
-        // 正常終了時
-        // TODO:トースト通知など検討
-        alert('ログインに成功しました。')
-        setUserState(true)
-        // Topに移動(仮)
-        history.push('/')
-      })
-      .catch(() => {
-        // 異常終了時
-        // TODO:トースト通知など検討
-        alert('ログインに失敗しました。')
-      })
-  }
-  return (
-    <main css={signin.base}>
-      {/* TODO:↓ダイアログコンポーネント化？ */}
-      <article css={card.base}>
-        {/* ×ボタン */}
-        <button css={card.cancelBase}>
-          <img src={Cancel} alt="キャンセル" />
-        </button>
-        {/* 見出し */}
-        <h1 css={card.title}>ログイン</h1>
-        {/* フォーム */}
-        <form css={card.formBase}>
-          <input
-            type="text"
-            name="email"
-            value={state.email}
-            onChange={handleChange}
-            css={card.email}
-            placeholder="メールアドレス"
-          />
-          <input
-            type="password"
-            name="pass"
-            value={state.pass}
-            onChange={handleChange}
-            css={card.pass}
-            placeholder="パスワード"
-          />
-          <button
-            type="button"
-            css={validation() ? card.btn : css(card.btn, card.btnDisable)}
-            tabIndex={validation() ? 0 : -1}
-            onClick={onSubmit}
-          >
-            ログイン
-          </button>
-        </form>
-        {/* パスワード忘れ */}
-        <p css={card.forgotInfo}>
-          パスワードをお忘れの場合は
-          <Link css={card.forgotLink} to="/">
-            こちら
-          </Link>
-        </p>
-        {/* または */}
-        <div css={card.hrBase}>
-          <hr css={card.hr} />
-          <div css={card.hrInfo}>または</div>
-          <hr css={card.hr} />
-        </div>
-        {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
-        <ul css={card.iconsBase}>
-          <li css={card.google}>
-            <button>
-              <img src={GoogleLogo} alt="Google" css={card.image} />
-            </button>
-          </li>
-          <li css={card.facebook}>
-            <button>
-              <img src={FacebookLogo} alt="Facebook" css={card.image} />
-            </button>
-          </li>
-          <li css={card.twitter}>
-            <button>
-              <img src={TwitterLogo} alt="Twitter" css={card.image} />
-            </button>
-          </li>
-        </ul>
-        {/* ログイン案内 */}
-        <p css={card.signupInfo}>
-          アカウントをお持ちでないですか？
-          <Link css={card.signupLink} to="/SignUp">
-            新規登録
-          </Link>
-        </p>
-      </article>
-    </main>
-  )
 }
