@@ -9,7 +9,7 @@ import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
 
-interface AppProps {
+export type AppProps = {
   setUserState: (state: boolean) => void
 }
 

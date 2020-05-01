@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 
-interface AppProps {
+export type AppProps = {
   isSignin: boolean
   setUserState: (state: boolean) => void
 }

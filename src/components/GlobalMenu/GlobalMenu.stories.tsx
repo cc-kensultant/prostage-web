@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { GlobalMenu } from './GlobalMenu'
 
-interface AppProps {
+export type AppProps = {
   isSignin: boolean
   setUserState: (state: boolean) => void
 }
