@@ -5,10 +5,8 @@ import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
 import firebase from './utils/firebase'
-/* eslint-disable */
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { jsx, css } from '@emotion/core'
-/* eslint-disable */
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { jsx } from '@emotion/core'
 
 const App = () => {
   const [user, setUser] = useState(false)

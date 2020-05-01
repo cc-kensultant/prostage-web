@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
-/* eslint-disable */
-import useSWR from 'swr'
-import { fetcher } from '../../utils/fetcher'
-/* eslint-disable */
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'

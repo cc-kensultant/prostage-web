@@ -1,9 +1,5 @@
 import React, { FC } from 'react'
 
-/* eslint-disable */
-import { action } from '@storybook/addon-actions'
-/* eslint-disable */
-
 import { GlobalMenu } from './GlobalMenu'
 
 interface AppProps {
