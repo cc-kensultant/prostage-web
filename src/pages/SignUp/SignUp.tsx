@@ -4,10 +4,10 @@ import { FC } from 'react'
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
-import Cancel from '../../image/Cancel.svg'
-import GoogleLogo from '../../image/GoogleLogo.svg'
-import FacebookLogo from '../../image/FacebookLogo.svg'
-import TwitterLogo from '../../image/TwitterLogo.svg'
+import Cancel from '../../images/Cancel.svg'
+import GoogleLogo from '../../images/GoogleLogo.svg'
+import FacebookLogo from '../../images/FacebookLogo.svg'
+import TwitterLogo from '../../images/TwitterLogo.svg'
 
 interface AppProps {
   setUserState: (state: boolean) => void

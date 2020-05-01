@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import firebase from '../../utils/firebase'
-import ProstageLogo from '../..//image/ProstageLogo.svg'
+import ProstageLogo from '../../images/ProstageLogo.svg'
 
 const head = {
   base: css`
