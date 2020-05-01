@@ -26,24 +26,22 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
   const validation = () => {
     return state.email && state.pass
   }
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!validation()) return
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(state.email, state.pass)
-      .then(() => {
-        // 正常終了時
-        // TODO:トースト通知など検討
-        alert('ログインに成功しました。')
-        setUserState(true)
-        // Topに移動(仮)
-        history.push('/')
-      })
-      .catch(() => {
-        // 異常終了時
-        // TODO:トースト通知など検討
-        alert('ログインに失敗しました。')
-      })
+    try {
+      await firebase.auth().signInWithEmailAndPassword(state.email, state.pass)
+      // 正常終了時
+      // TODO: IDトークンの取得/保持 firebase.auth().currentUser.getIdToken()
+      // TODO:トースト通知など検討
+      alert('ログインに成功しました。')
+      setUserState(true)
+      // Topに移動(仮)
+      history.push('/')
+    } catch {
+      // 異常終了時
+      // TODO:トースト通知など検討
+      alert('ログインに失敗しました。')
+    }
   }
   return (
     <main css={styles.base}>

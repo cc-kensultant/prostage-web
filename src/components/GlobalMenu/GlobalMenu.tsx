@@ -14,15 +14,15 @@ interface AppProps {
 export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
   const history = useHistory()
   const signOut = () => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            alert('ログアウトしました')
-            setUserState(false)
-          })
+        try {
+          await firebase.auth().signOut()
+          alert('ログアウトしました')
+          setUserState(false)
+        } catch {
+          alert('ログアウトに失敗しました')
+        }
       }
     })
   }

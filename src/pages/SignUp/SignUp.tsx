@@ -27,24 +27,21 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
   const validation = () => {
     return state.email && state.pass && state.passConf
   }
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!validation()) return
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(state.email, state.pass)
-      .then(() => {
-        // 正常終了時
-        // TODO:トースト通知など検討
-        alert('アカウント登録に成功しました。')
-        setUserState(true)
-        // Topに移動(仮)
-        history.push('/')
-      })
-      .catch(() => {
-        // 異常終了時
-        // TODO:トースト通知など検討
-        alert('アカウント登録に失敗しました。')
-      })
+    try {
+      await firebase.auth().createUserWithEmailAndPassword(state.email, state.pass)
+      // 正常終了時
+      // TODO:トースト通知など検討
+      alert('アカウント登録に成功しました。')
+      setUserState(true)
+      // Topに移動(仮)
+      history.push('/')
+    } catch {
+      // 異常終了時
+      // TODO:トースト通知など検討
+      alert('アカウント登録に失敗しました。')
+    }
   }
   return (
     <main css={styles.base}>
