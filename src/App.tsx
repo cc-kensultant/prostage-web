@@ -23,7 +23,7 @@ const App = () => {
         setUser(false)
       }
     })
-  })
+  }, [])
   return (
     <Router>
       <GlobalMenu isSignin={user} setUserState={setUserState} />
