@@ -7,7 +7,7 @@ import { fetcher } from '../../utils/fetcher'
 /* eslint-disable */
 import { useState } from 'react'
 import firebase from '../../utils/firebase'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 interface AppProps {
   setUserState: (state: boolean) => void
@@ -46,17 +46,26 @@ const card = {
   `,
   // 登録フォーム
   cancelBase: css`
-    display: flex;
-    justify-content: flex-end;
-  `,
-  cancelImage: css`
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    transition: opacity .2s;
-    &:hover {
-      opacity: 0.5;
-    },
+    display: block;
+    margin-left: auto;
+    padding: unset;
+    border: none;
+    background: none;
+    img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+    &:focus {
+      outline: none;
+      img {
+        opacity: 0.5;
+      }
+    }
   `,
   title: css`
     margin-top: -12px;
@@ -116,21 +125,24 @@ const card = {
     margin-top: 15px;
     width: 100%;
     height: 56px;
-    background: #D9D9D9;
+    background: #d9d9d9;
     font-family: Mplus 1p;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
     line-height: 36px;
-    color: #3A3A3A;
+    color: #3a3a3a;
     cursor: pointer;
-    border: 1px solid #3A3A3A;
-    transition: background .2s, opacity .2s;
+    border: 1px solid #3a3a3a;
+    transition: background 0.2s, opacity 0.2s;
     outline: none;
     opacity: 1;
     &:hover {
-      background: #BFBFBF;
-    },
+      background: #bfbfbf;
+    }
+    &:focus {
+      background: #bfbfbf;
+    }
   `,
   btnDisable: css`
     border: unset !important;
@@ -138,7 +150,7 @@ const card = {
     cursor: default !important;
     &:hover {
       background: #D9D9D9 !important;
-    },
+    }
   `,
   // パスワード忘れ
   forgotInfo: css`
@@ -153,10 +165,14 @@ const card = {
     color: #555555;
     cursor: default;
   `,
-  forgotSpan: css`
+  forgotLink: css`
     margin-left: 4px;
     color: #2f80ed;
     cursor: pointer;
+    outline: none;
+    &:focus {
+      background: #f3f3f3;
+    }
   `,
   // ソーシャルアカウント認証
   hrBase: css`
@@ -188,49 +204,76 @@ const card = {
     justify-content: space-between;
   `,
   google: css`
-    width: 94px;
-    height: 45px;
     background: #f5f5f5;
     border: 1px solid #1f212b;
     border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: background .2s;
-    &:hover {
-      background: #D9D9D9;
-    },
+    button {
+      width: 94px;
+      height: 45px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: unset;
+      outline: none;
+      transition: background 0.2s;
+      &:hover {
+        background: #d9d9d9;
+      }
+      &:focus {
+        background: #d9d9d9;
+      }
+    }
   `,
   facebook: css`
-    width: 94px;
-    height: 45px;
     background: #f5f5f5;
     border: 1px solid #317bff;
     border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: background .2s;
-    &:hover {
-      background: #D9D9D9;
-    },
+    button {
+      width: 94px;
+      height: 45px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: unset;
+      outline: none;
+      transition: background 0.2s;
+      &:hover {
+        background: #d9d9d9;
+      }
+      &:focus {
+        background: #d9d9d9;
+      }
+    }
   `,
   twitter: css`
-    width: 94px;
-    height: 45px;
     background: #f5f5f5;
     border: 1px solid #00a9f4;
     border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: background .2s;
-    &:hover {
-      background: #D9D9D9;
-    },
+    button {
+      width: 94px;
+      height: 45px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: unset;
+      outline: none;
+      transition: background 0.2s;
+      &:hover {
+        background: #d9d9d9;
+      }
+      &:focus {
+        background: #d9d9d9;
+      }
+    }
   `,
   image: css`
     width: 40px;
@@ -249,10 +292,14 @@ const card = {
     color: #555555;
     cursor: default;
   `,
-  signupSpan: css`
+  signupLink: css`
     margin-left: 4px;
     color: #2f80ed;
     cursor: pointer;
+    outline: none;
+    &:focus {
+      background: #f3f3f3;
+    }
   `,
 }
 
@@ -288,17 +335,16 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
       })
   }
   return (
-    <div css={signin.base}>
+    <main css={signin.base}>
       {/* TODO:↓ダイアログコンポーネント化？ */}
-      <div css={card.base}>
-        <div css={card.cancelBase}>
-          <img
-            src={`${process.env.PUBLIC_URL}/Cancel.svg`}
-            alt="キャンセル"
-            css={card.cancelImage}
-          />
-        </div>
-        <div css={card.title}>ログイン</div>
+      <article css={card.base}>
+        {/* ×ボタン */}
+        <button css={card.cancelBase}>
+          <img src={`${process.env.PUBLIC_URL}/Cancel.svg`} alt="キャンセル" />
+        </button>
+        {/* 見出し */}
+        <h1 css={card.title}>ログイン</h1>
+        {/* フォーム */}
         <form css={card.formBase}>
           <input
             type="text"
@@ -308,61 +354,70 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
             css={card.email}
             placeholder="メールアドレス"
           />
-          <div>
-            <input
-              type="password"
-              name="pass"
-              value={state.pass}
-              onChange={handleChange}
-              css={card.pass}
-              placeholder="パスワード"
-            />
-          </div>
-          <div>
-            <button
-              type="button"
-              css={validation() ? card.btn : css(card.btn, card.btnDisable)}
-              onClick={onSubmit}
-            >
-              ログイン
-            </button>
-          </div>
+          <input
+            type="password"
+            name="pass"
+            value={state.pass}
+            onChange={handleChange}
+            css={card.pass}
+            placeholder="パスワード"
+          />
+          <button
+            type="button"
+            css={validation() ? card.btn : css(card.btn, card.btnDisable)}
+            tabIndex={validation() ? 0 : -1}
+            onClick={onSubmit}
+          >
+            ログイン
+          </button>
         </form>
         {/* パスワード忘れ */}
-        <div css={card.forgotInfo}>
+        <p css={card.forgotInfo}>
           パスワードをお忘れの場合は
-          <span css={card.forgotSpan}>こちら</span>
-        </div>
+          <Link css={card.forgotLink} to="/">
+            こちら
+          </Link>
+        </p>
         {/* または */}
         <div css={card.hrBase}>
           <hr css={card.hr} />
           <div css={card.hrInfo}>または</div>
           <hr css={card.hr} />
         </div>
-        {/* google, facebook, twitter */}
-        <div css={card.iconsBase}>
-          <div css={card.google}>
-            <img src={`${process.env.PUBLIC_URL}/GoogleLogo.svg`} alt="Google" css={card.image} />
-          </div>
-          <div css={card.facebook}>
-            <img
-              src={`${process.env.PUBLIC_URL}/FacebookLogo.svg`}
-              alt="Facebook"
-              css={card.image}
-            />
-          </div>
-          <div css={card.twitter}>
-            <img src={`${process.env.PUBLIC_URL}/TwitterLogo.svg`} alt="Twitter" css={card.image} />
-          </div>
-        </div>
+        {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
+        <ul css={card.iconsBase}>
+          <li css={card.google}>
+            <button>
+              <img src={`${process.env.PUBLIC_URL}/GoogleLogo.svg`} alt="Google" css={card.image} />
+            </button>
+          </li>
+          <li css={card.facebook}>
+            <button>
+              <img
+                src={`${process.env.PUBLIC_URL}/FacebookLogo.svg`}
+                alt="Facebook"
+                css={card.image}
+              />
+            </button>
+          </li>
+          <li css={card.twitter}>
+            <button>
+              <img
+                src={`${process.env.PUBLIC_URL}/TwitterLogo.svg`}
+                alt="Twitter"
+                css={card.image}
+              />
+            </button>
+          </li>
+        </ul>
         {/* ログイン案内 */}
-        <div css={card.signupInfo}>
+        <p css={card.signupInfo}>
           アカウントをお持ちでないですか？
-          <span css={card.signupSpan} onClick={() => history.push('/SignUp')}>
+          <Link css={card.signupLink} to="/SignUp">
             新規登録
-          </span>
-        </div>
-      </div>
-    </div>
+          </Link>
+        </p>
+      </article>
+    </main>
   )
 }
