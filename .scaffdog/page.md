@@ -10,7 +10,8 @@ ignore: []
 # `{{ input | pascal }}/index.tsx`
 
 ```javascript
-export { {{ input | pascal }} } from './{{ input | pascal }}';
+export { {{ input | pascal }} } from './{{ input | pascal }}'
+
 ```
 
 # `{{ input | pascal }}/{{ input | pascal }}.tsx`
@@ -18,22 +19,26 @@ export { {{ input | pascal }} } from './{{ input | pascal }}';
 ```javascript
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { FC } from 'react'
 import useSWR from 'swr'
-import { fetcher } from '../utils/fetcher'
+import { fetcher } from '../../utils/fetcher'
 
 export type Props = {
-  children: JSX.Element,
+  hoge: String
+}
+
+export const {{ input | pascal }}: FC<Props> = ({ hoge, children }) => {
+  const { data } = useSWR('dummy', fetcher)
+  console.log(data)
+  return (
+    <div css={style}>
+      {hoge} {children ? `| ${children}` : ''}
+    </div>
+  )
 }
 
 const style = css`
   color: red;
 `
 
-export const {{ input | pascal }} = ({ children }: Props) => {
-  const { data } = useSWR('dummy', fetcher)
-  console.log(data)
-  return (
-    <div css={style}>{children}</div>
-  )
-};
 ```
