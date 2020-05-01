@@ -47,7 +47,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
       })
   }
   return (
-    <main css={signup.base}>
+    <main css={styles.base}>
       {/* TODO:↓ダイアログコンポーネント化？ */}
       <article css={card.base}>
         {/* ×ボタン */}
@@ -134,7 +134,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
 }
 
 /** css */
-const signup = {
+const styles = {
   base: css`
     width: 100%;
     margin: 120px 0;
@@ -154,7 +154,7 @@ const signup = {
     }
   `,
 }
-// TODO:↓ダイアログコンポーネント化？
+// TODO:↓ダイアログコンポーネント化の際にstylesに名称変更
 const card = {
   // ベース
   base: css`

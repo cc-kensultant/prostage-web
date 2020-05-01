@@ -27,27 +27,27 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
     })
   }
   return (
-    <header css={head.base}>
-      <ul id="nav" css={head.nav}>
+    <header css={styles.base}>
+      <ul id="nav" css={styles.nav}>
         {/* ロゴ */}
-        <li css={head.img}>
+        <li css={styles.img}>
           <Link to="">
             <img src={ProstageLogo} alt="Prostage" />
           </Link>
         </li>
         {/* 法人プラン */}
-        <li css={head.plan}>
+        <li css={styles.plan}>
           <Link to="/">法人プラン</Link>
         </li>
         {/* ログイン */}
-        <li css={isSignin ? head.hidden : head.signin}>
+        <li css={isSignin ? styles.hidden : styles.signin}>
           <Link to="/SignIn">ログイン</Link>
         </li>
         {/* 無料会員登録 */}
-        <li css={isSignin ? head.hidden : head.btn}>
+        <li css={isSignin ? styles.hidden : styles.btn}>
           <button onClick={() => history.push('/SignUp')}>無料会員登録</button>
         </li>
-        <li css={isSignin ? head.signout : head.hidden}>
+        <li css={isSignin ? styles.signout : styles.hidden}>
           {/* ログアウト */}
           <button onClick={signOut}>ログアウト</button>
         </li>
@@ -57,7 +57,7 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
 }
 
 /** css */
-const head = {
+const styles = {
   base: css`
     position: sticky;
     top: 0;
