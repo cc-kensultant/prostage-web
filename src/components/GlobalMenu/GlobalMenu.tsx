@@ -9,68 +9,124 @@ const head = {
     position: sticky;
     top: 0;
     background: #fff;
-    height: 34px;
-    padding: 13px 24px;
-    display: flex;
-    align-items: center;
     box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.12);
     z-index: 1;
   `,
+  nav: css`
+    height: 34px;
+    padding: 13px 24px;
+    margin: unset;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    li {
+      height: 100%;
+    }
+  `,
   img: css`
     margin-left: 8px;
-    width: 60px;
-    height: 20px;
     cursor: pointer;
-  `,
-  space: css`
-    flex-grow: 1 !important;
+    a {
+      display: block;
+      height: 34px;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
+    a img {
+      max-width: 60px;
+      height: 34px;
+    }
   `,
   plan: css`
-    width: 82px;
-    height: 20px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1em;
-    color: #555555;
-    text-decoration: unset;
-    text-align: center;
-    cursor: pointer;
     margin-right: 44px;
+    margin-left: auto;
+    width: 82px;
+    height: 34px;
+    cursor: pointer;
+    text-align: center;
+    a {
+      display: block;
+      text-decoration: unset;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
   `,
   signin: css`
     width: 82px;
-    height: 20px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.1em;
-    color: #555555;
-    text-decoration: unset;
+    height: 34px;
     text-align: center;
     cursor: pointer;
     margin-right: 24px;
+    a {
+      display: block;
+      text-decoration: unset;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
   `,
   btn: css`
-    width: 169px;
-    height: 34px;
-    background: #1890ff;
-    border-radius: 3px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.1em;
-    color: #fffdfd;
-    cursor: pointer;
-    border: unset;
-    transition: background .2s;
-    outline: none;
-    &:hover {
-      background: #096DD9;
-    },
+    button {
+      width: 169px;
+      height: 34px;
+      background: #1890ff;
+      border-radius: 3px;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0.1em;
+      color: #fffdfd;
+      cursor: pointer;
+      border: unset;
+      transition: background 0.2s;
+      outline: none;
+      &:focus {
+        background: #096dd9;
+      }
+      &:hover {
+        background: #096dd9;
+      }
+    }
   `,
   hidden: css`
     display: none !important;
+  `,
+  signout: css`
+    width: 82px;
+    height: 34px;
+    text-align: center;
+    margin-right: 24px;
+    button {
+      cursor: pointer;
+      padding: unset;
+      text-decoration: unset;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      background: none;
+      border: none;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
   `,
 }
 
@@ -95,30 +151,31 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
     })
   }
   return (
-    <div css={head.base}>
-      {/* ロゴ */}
-      <img
-        src={`${process.env.PUBLIC_URL}/ProstageLogo.svg`}
-        alt="Prostage"
-        css={head.img}
-        onClick={() => history.push('/')}
-      />
-      {/* スペーサー */}
-      <div css={head.space} />
-      {/* 法人プラン */}
-      <div css={head.plan}>法人プラン</div>
-      {/* ログイン */}
-      <Link to="/SignIn" css={isSignin ? head.hidden : head.signin}>
-        ログイン
-      </Link>
-      {/* 無料会員登録 */}
-      <button css={isSignin ? head.hidden : head.btn} onClick={() => history.push('/SignUp')}>
-        無料会員登録
-      </button>
-      {/* ログアウト */}
-      <div css={isSignin ? head.signin : head.hidden} onClick={signOut}>
-        ログアウト
-      </div>
-    </div>
+    <header css={head.base}>
+      <ul id="nav" css={head.nav}>
+        {/* ロゴ */}
+        <li css={head.img}>
+          <Link to="">
+            <img src={`${process.env.PUBLIC_URL}/ProstageLogo.svg`} alt="Prostage" />
+          </Link>
+        </li>
+        {/* 法人プラン */}
+        <li css={head.plan}>
+          <Link to="/">法人プラン</Link>
+        </li>
+        {/* ログイン */}
+        <li css={isSignin ? head.hidden : head.signin}>
+          <Link to="/SignIn">ログイン</Link>
+        </li>
+        {/* 無料会員登録 */}
+        <li css={isSignin ? head.hidden : head.btn}>
+          <button onClick={() => history.push('/SignUp')}>無料会員登録</button>
+        </li>
+        <li css={isSignin ? head.signout : head.hidden}>
+          {/* ログアウト */}
+          <button onClick={signOut}>ログアウト</button>
+        </li>
+      </ul>
+    </header>
   )
 }
