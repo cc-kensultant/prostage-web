@@ -24,6 +24,7 @@
     "unfetch": "^4.1.0"
   },
   "devDependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "^2.0.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-info": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
@@ -40,6 +41,7 @@
     "prettier": "^2.0.4",
     "react-docgen-typescript-loader": "^3.7.2",
     "scaffdog": "^0.2.0",
+    "secretlint": "^2.0.0",
     "stylelint": "^13.3.2",
     "stylelint-config-standard": "^20.0.0"
   },
