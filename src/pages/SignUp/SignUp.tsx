@@ -282,7 +282,7 @@ const card = {
     line-height: 36px;
     color: #3a3a3a;
     cursor: pointer;
-    border: 1px solid #3a3a3a;
+    border: unset;
     transition: background 0.2s, opacity 0.2s;
     outline: none;
     opacity: 1;
@@ -294,7 +294,6 @@ const card = {
     }
   `,
   btnDisable: css`
-    border: unset !important;
     opacity: 0.4 !important;
     cursor: default !important;
     &:hover {
