@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core'
 import React, { FC, useState } from 'react'
 import { firebase } from '../../utils/firebase'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
@@ -122,9 +122,9 @@ export const SignUp: FC = () => {
         {/* ログイン案内 */}
         <p css={card.signinInfo}>
           すでにアカウントをお持ちですか？
-          <Link css={card.signinLink} to="/sign-in">
+          <button css={card.signinLink} onClick={() => history.push('/sign-in')}>
             ログイン
-          </Link>
+          </button>
         </p>
       </article>
     </main>
@@ -419,6 +419,9 @@ const card = {
     cursor: default;
   `,
   signinLink: css`
+    background: unset;
+    border: unset;
+    text-decoration: underline;
     margin-left: 4px;
     color: #2f80ed;
     cursor: pointer;

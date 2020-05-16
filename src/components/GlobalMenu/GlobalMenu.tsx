@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React, { FC } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import { Context } from '../../types/contextType'
@@ -9,7 +9,6 @@ import { Context } from '../../types/contextType'
 /** script */
 export const GlobalMenu: FC = () => {
   const context = React.useContext(Context)
-  const history = useHistory()
   const signOut = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -42,9 +41,7 @@ export const GlobalMenu: FC = () => {
         </li>
         {/* 無料会員登録 */}
         <li css={context.isSignin ? styles.hidden : styles.btn}>
-          <button type="button" onClick={() => history.push('/sign-up')}>
-            無料会員登録
-          </button>
+          <Link to="/sign-up">無料会員登録</Link>
         </li>
         <li css={context.isSignin ? styles.signout : styles.hidden}>
           {/* ログアウト */}
@@ -135,14 +132,17 @@ const styles = {
     }
   `,
   btn: css`
-    button {
+    a {
+      display: block;
+      text-align: center;
+      text-decoration: unset;
       width: 169px;
       height: 34px;
       background: #1890ff;
       border-radius: 3px;
       font-weight: 900;
       font-size: 14px;
-      line-height: 16px;
+      line-height: 34px;
       letter-spacing: 0.1em;
       color: #fffdfd;
       cursor: pointer;

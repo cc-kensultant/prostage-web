@@ -111,9 +111,9 @@ export const SignIn: FC = () => {
         {/* ログイン案内 */}
         <p css={card.signupInfo}>
           アカウントをお持ちでないですか？
-          <Link css={card.signupLink} to="/sign-up">
+          <button css={card.signupLink} onClick={() => history.push('/sign-up')}>
             新規登録
-          </Link>
+          </button>
         </p>
       </article>
     </main>
@@ -399,6 +399,9 @@ const card = {
     cursor: default;
   `,
   signupLink: css`
+    background: unset;
+    border: unset;
+    text-decoration: underline;
     margin-left: 4px;
     color: #2f80ed;
     cursor: pointer;
