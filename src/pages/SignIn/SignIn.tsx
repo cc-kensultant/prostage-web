@@ -45,7 +45,7 @@ export const SignIn: FC = () => {
       {/* TODO:↓ダイアログコンポーネント化？ */}
       <article css={card.base}>
         {/* ×ボタン */}
-        <button css={card.cancelBase}>
+        <button type="button" css={card.cancelBase}>
           <img src={Cancel} alt="キャンセル" />
         </button>
         {/* 見出し */}
@@ -93,17 +93,17 @@ export const SignIn: FC = () => {
         {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
         <ul css={card.iconsBase}>
           <li css={card.google}>
-            <button>
+            <button type="button">
               <img src={GoogleLogo} alt="Google" css={card.image} />
             </button>
           </li>
           <li css={card.facebook}>
-            <button>
+            <button type="button">
               <img src={FacebookLogo} alt="Facebook" css={card.image} />
             </button>
           </li>
           <li css={card.twitter}>
-            <button>
+            <button type="button">
               <img src={TwitterLogo} alt="Twitter" css={card.image} />
             </button>
           </li>

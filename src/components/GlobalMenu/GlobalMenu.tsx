@@ -42,11 +42,15 @@ export const GlobalMenu: FC = () => {
         </li>
         {/* 無料会員登録 */}
         <li css={context.isSignin ? styles.hidden : styles.btn}>
-          <button onClick={() => history.push('/sign-up')}>無料会員登録</button>
+          <button type="button" onClick={() => history.push('/sign-up')}>
+            無料会員登録
+          </button>
         </li>
         <li css={context.isSignin ? styles.signout : styles.hidden}>
           {/* ログアウト */}
-          <button onClick={signOut}>ログアウト</button>
+          <button type="button" onClick={signOut}>
+            ログアウト
+          </button>
         </li>
       </ul>
     </header>
