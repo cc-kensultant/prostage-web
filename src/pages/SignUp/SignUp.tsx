@@ -13,7 +13,6 @@ export type AppProps = {
   setUserState: (state: boolean) => void
 }
 
-/** script */
 export const SignUp: FC = () => {
   const context = React.useContext(Context)
   const [state, setState] = useState({
@@ -32,14 +31,12 @@ export const SignUp: FC = () => {
     if (!validation()) return
     try {
       await firebase.auth().createUserWithEmailAndPassword(state.email, state.pass)
-      // 正常終了時
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
       context.setUserState(true)
-      // Topに移動(仮)
+      // TODO:新規登録後ページに移動
       history.push('/')
     } catch {
-      // 異常終了時
       // TODO:トースト通知など検討
       alert('アカウント登録に失敗しました。')
     }
@@ -48,19 +45,15 @@ export const SignUp: FC = () => {
     <main css={styles.base}>
       {/* TODO:↓ダイアログコンポーネント化？ */}
       <article css={card.base}>
-        {/* ×ボタン */}
         <button type="button" css={card.cancelBase}>
           <img src={Cancel} alt="キャンセル" />
         </button>
-        {/* 見出し */}
         <h1 css={card.title}>アカウントを作成</h1>
-        {/* 説明 */}
         <p css={card.info}>
           アカウントを作成することにより、利用規規約及び
           <br />
           プライバシーポリシーに同意するものとします。
         </p>
-        {/* フォーム */}
         <form css={card.formBase}>
           <input
             type="text"
@@ -95,7 +88,6 @@ export const SignUp: FC = () => {
             新規登録
           </button>
         </form>
-        {/* または */}
         <div css={card.hrBase}>
           <hr css={card.hr} />
           <div css={card.hrInfo}>または</div>
@@ -119,7 +111,6 @@ export const SignUp: FC = () => {
             </button>
           </li>
         </ul>
-        {/* ログイン案内 */}
         <p css={card.signinInfo}>
           すでにアカウントをお持ちですか？
           <Link css={card.signinLink} to="/sign-in">
@@ -131,7 +122,6 @@ export const SignUp: FC = () => {
   )
 }
 
-/** css */
 const styles = {
   base: css`
     width: 100%;
@@ -154,7 +144,6 @@ const styles = {
 }
 // TODO:↓ダイアログコンポーネント化の際にstylesに名称変更
 const card = {
-  // ベース
   base: css`
     width: 404px;
     padding: 18px;
@@ -162,7 +151,6 @@ const card = {
     border-radius: 10px;
     box-shadow: 0px 0px 6px rgb(0, 0, 0, 0.1);
   `,
-  // 登録フォーム
   cancelBase: css`
     display: block;
     margin-left: auto;
@@ -300,7 +288,6 @@ const card = {
       background: #D9D9D9 !important;
     },
   `,
-  // ソーシャルアカウント認証
   hrBase: css`
     margin-top: 34px;
     padding: 0 16px;
@@ -405,7 +392,6 @@ const card = {
     width: 40px;
     height: 40px;
   `,
-  // ログイン案内
   signinInfo: css`
     margin-top: 36px;
     padding: 0 16px;

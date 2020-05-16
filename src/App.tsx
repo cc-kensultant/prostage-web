@@ -11,12 +11,10 @@ import { Context } from './types/contextType'
 
 const App = () => {
   const [user, setUser] = useState(false)
-  // ログイン状態更新
   const setUserState = (state: boolean) => {
     setUser(state)
   }
   useEffect(() => {
-    // マウント時セッション確認
     firebase.auth().onAuthStateChanged((userData) => {
       if (userData) {
         setUser(true)
@@ -29,7 +27,6 @@ const App = () => {
     <Router>
       <Context.Provider value={{ isSignin: user, setUserState }}>
         <GlobalMenu />
-        {/* メインコンテンツ */}
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path

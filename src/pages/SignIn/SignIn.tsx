@@ -9,7 +9,6 @@ import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
 import { Context } from '../../types/contextType'
 
-/** script */
 export const SignIn: FC = () => {
   const context = React.useContext(Context)
   const [state, setState] = useState({
@@ -27,15 +26,13 @@ export const SignIn: FC = () => {
     if (!validation()) return
     try {
       await firebase.auth().signInWithEmailAndPassword(state.email, state.pass)
-      // 正常終了時
       // TODO: IDトークンの取得/保持 firebase.auth().currentUser.getIdToken()
       // TODO:トースト通知など検討
       alert('ログインに成功しました。')
       context.setUserState(true)
-      // Topに移動(仮)
+      // TODO:ログイン後ページに移動
       history.push('/')
     } catch {
-      // 異常終了時
       // TODO:トースト通知など検討
       alert('ログインに失敗しました。')
     }
@@ -44,13 +41,10 @@ export const SignIn: FC = () => {
     <main css={styles.base}>
       {/* TODO:↓ダイアログコンポーネント化？ */}
       <article css={card.base}>
-        {/* ×ボタン */}
         <button type="button" css={card.cancelBase}>
           <img src={Cancel} alt="キャンセル" />
         </button>
-        {/* 見出し */}
         <h1 css={card.title}>ログイン</h1>
-        {/* フォーム */}
         <form css={card.formBase}>
           <input
             type="text"
@@ -77,14 +71,12 @@ export const SignIn: FC = () => {
             ログイン
           </button>
         </form>
-        {/* パスワード忘れ */}
         <p css={card.forgotInfo}>
           パスワードをお忘れの場合は
           <Link css={card.forgotLink} to="/">
             こちら
           </Link>
         </p>
-        {/* または */}
         <div css={card.hrBase}>
           <hr css={card.hr} />
           <div css={card.hrInfo}>または</div>
@@ -108,7 +100,6 @@ export const SignIn: FC = () => {
             </button>
           </li>
         </ul>
-        {/* ログイン案内 */}
         <p css={card.signupInfo}>
           アカウントをお持ちでないですか？
           <Link css={card.signupLink} to="/sign-up">
@@ -120,7 +111,6 @@ export const SignIn: FC = () => {
   )
 }
 
-/** css */
 const styles = {
   base: css`
     width: 100%;
@@ -143,7 +133,6 @@ const styles = {
 }
 // TODO:↓ダイアログコンポーネント化の際にstylesに名称変更
 const card = {
-  // ベース
   base: css`
     width: 404px;
     padding: 18px;
@@ -151,7 +140,6 @@ const card = {
     border-radius: 10px;
     box-shadow: 0px 0px 6px rgb(0, 0, 0, 0.1);
   `,
-  // 登録フォーム
   cancelBase: css`
     display: block;
     margin-left: auto;
@@ -258,7 +246,6 @@ const card = {
       background: #d9d9d9 !important;
     }
   `,
-  // パスワード忘れ
   forgotInfo: css`
     margin-top: 15px;
     padding: 0 16px;
@@ -280,7 +267,6 @@ const card = {
       background: #f3f3f3;
     }
   `,
-  // ソーシャルアカウント認証
   hrBase: css`
     margin-top: 42px;
     padding: 0 16px;
@@ -385,7 +371,6 @@ const card = {
     width: 40px;
     height: 40px;
   `,
-  // 新規登録案内
   signupInfo: css`
     margin-top: 36px;
     padding: 0 16px;

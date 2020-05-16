@@ -6,7 +6,6 @@ import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import { Context } from '../../types/contextType'
 
-/** script */
 export const GlobalMenu: FC = () => {
   const context = React.useContext(Context)
   const signOut = () => {
@@ -25,23 +24,19 @@ export const GlobalMenu: FC = () => {
   return (
     <header css={styles.base}>
       <ul id="nav" css={styles.nav}>
-        {/* ロゴ */}
         <li css={styles.img}>
           <Link to="">
             <img src={ProstageLogo} alt="Prostage" />
           </Link>
         </li>
-        {/* 法人プラン */}
         <li css={styles.plan}>
           <Link to="/">法人プラン</Link>
         </li>
-        {/* ログイン */}
         {!context.isSignin && (
           <li css={styles.signin}>
             <Link to="/sign-in">ログイン</Link>
           </li>
         )}
-        {/* 無料会員登録 */}
         {!context.isSignin && (
           <li css={styles.btn}>
             <Link to="/sign-up">無料会員登録</Link>
@@ -49,7 +44,6 @@ export const GlobalMenu: FC = () => {
         )}
         {context.isSignin && (
           <li css={styles.signout}>
-            {/* ログアウト */}
             <button type="button" onClick={signOut}>
               ログアウト
             </button>
@@ -60,7 +54,6 @@ export const GlobalMenu: FC = () => {
   )
 }
 
-/** css */
 const styles = {
   base: css`
     position: sticky;
