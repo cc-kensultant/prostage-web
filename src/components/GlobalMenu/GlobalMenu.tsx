@@ -36,19 +36,25 @@ export const GlobalMenu: FC = () => {
           <Link to="/">法人プラン</Link>
         </li>
         {/* ログイン */}
-        <li css={context.isSignin ? styles.hidden : styles.signin}>
-          <Link to="/sign-in">ログイン</Link>
-        </li>
+        {!context.isSignin && (
+          <li css={styles.signin}>
+            <Link to="/sign-in">ログイン</Link>
+          </li>
+        )}
         {/* 無料会員登録 */}
-        <li css={context.isSignin ? styles.hidden : styles.btn}>
-          <Link to="/sign-up">無料会員登録</Link>
-        </li>
-        <li css={context.isSignin ? styles.signout : styles.hidden}>
-          {/* ログアウト */}
-          <button type="button" onClick={signOut}>
-            ログアウト
-          </button>
-        </li>
+        {!context.isSignin && (
+          <li css={styles.btn}>
+            <Link to="/sign-up">無料会員登録</Link>
+          </li>
+        )}
+        {context.isSignin && (
+          <li css={styles.signout}>
+            {/* ログアウト */}
+            <button type="button" onClick={signOut}>
+              ログアウト
+            </button>
+          </li>
+        )}
       </ul>
     </header>
   )
@@ -156,9 +162,6 @@ const styles = {
         background: #096dd9;
       }
     }
-  `,
-  hidden: css`
-    display: none !important;
   `,
   signout: css`
     width: 82px;
