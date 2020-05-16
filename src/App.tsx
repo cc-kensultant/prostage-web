@@ -7,6 +7,7 @@ import { SignUp } from './pages/SignUp'
 import { firebase } from './utils/firebase'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { jsx } from '@emotion/core'
+import { Context } from './types/contextType'
 
 const App = () => {
   const [user, setUser] = useState(false)
@@ -26,26 +27,28 @@ const App = () => {
   }, [])
   return (
     <Router>
-      <GlobalMenu isSignin={user} setUserState={setUserState} />
-      {/* メインコンテンツ */}
-      {/*
-        A <Switch> looks through all its children <Route>
-        elements and renders the first one whose path
-        matches the current URL. Use a <Switch> any time
-        you have multiple routes, but you want only one
-        of them to render at a time
-      */}
-      <Switch>
-        <Route exact path="/">
-          <Top />
-        </Route>
-        <Route exact path="/sign-in">
-          <SignIn setUserState={setUserState} />
-        </Route>
-        <Route exact path="/sign-up">
-          <SignUp setUserState={setUserState} />
-        </Route>
-      </Switch>
+      <Context.Provider value={{ isSignin: user, setUserState }}>
+        <GlobalMenu />
+        {/* メインコンテンツ */}
+        {/*
+          A <Switch> looks through all its children <Route>
+          elements and renders the first one whose path
+          matches the current URL. Use a <Switch> any time
+          you have multiple routes, but you want only one
+          of them to render at a time
+        */}
+        <Switch>
+          <Route exact path="/">
+            <Top />
+          </Route>
+          <Route exact path="/sign-in">
+            <SignIn />
+          </Route>
+          <Route exact path="/sign-up">
+            <SignUp />
+          </Route>
+        </Switch>
+      </Context.Provider>
     </Router>
   )
 }

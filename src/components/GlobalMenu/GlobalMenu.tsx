@@ -1,17 +1,14 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
-
-export type AppProps = {
-  isSignin: boolean
-  setUserState: (state: boolean) => void
-}
+import { Context } from '../../types/contextType'
 
 /** script */
-export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
+export const GlobalMenu: FC = () => {
+  const context = React.useContext(Context)
   const history = useHistory()
   const signOut = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -19,7 +16,7 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
         try {
           await firebase.auth().signOut()
           alert('ログアウトしました')
-          setUserState(false)
+          context.setUserState(false)
         } catch {
           alert('ログアウトに失敗しました')
         }
@@ -40,14 +37,14 @@ export const GlobalMenu: FC<AppProps> = ({ isSignin, setUserState }) => {
           <Link to="/">法人プラン</Link>
         </li>
         {/* ログイン */}
-        <li css={isSignin ? styles.hidden : styles.signin}>
+        <li css={context.isSignin ? styles.hidden : styles.signin}>
           <Link to="/sign-in">ログイン</Link>
         </li>
         {/* 無料会員登録 */}
-        <li css={isSignin ? styles.hidden : styles.btn}>
+        <li css={context.isSignin ? styles.hidden : styles.btn}>
           <button onClick={() => history.push('/sign-up')}>無料会員登録</button>
         </li>
-        <li css={isSignin ? styles.signout : styles.hidden}>
+        <li css={context.isSignin ? styles.signout : styles.hidden}>
           {/* ログアウト */}
           <button onClick={signOut}>ログアウト</button>
         </li>

@@ -1,20 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { FC } from 'react'
-import { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { firebase } from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-
-export type AppProps = {
-  setUserState: (state: boolean) => void
-}
+import { Context } from '../../types/contextType'
 
 /** script */
-export const SignIn: FC<AppProps> = ({ setUserState }) => {
+export const SignIn: FC = () => {
+  const context = React.useContext(Context)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -34,7 +31,7 @@ export const SignIn: FC<AppProps> = ({ setUserState }) => {
       // TODO: IDトークンの取得/保持 firebase.auth().currentUser.getIdToken()
       // TODO:トースト通知など検討
       alert('ログインに成功しました。')
-      setUserState(true)
+      context.setUserState(true)
       // Topに移動(仮)
       history.push('/')
     } catch {
@@ -259,7 +256,7 @@ const card = {
     opacity: 0.4 !important;
     cursor: default !important;
     &:hover {
-      background: #D9D9D9 !important;
+      background: #d9d9d9 !important;
     }
   `,
   // パスワード忘れ

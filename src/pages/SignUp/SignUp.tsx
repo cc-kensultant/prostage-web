@@ -1,20 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { FC } from 'react'
-import { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { firebase } from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
+import { Context } from '../../types/contextType'
 
 export type AppProps = {
   setUserState: (state: boolean) => void
 }
 
 /** script */
-export const SignUp: FC<AppProps> = ({ setUserState }) => {
+export const SignUp: FC = () => {
+  const context = React.useContext(Context)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -34,7 +35,7 @@ export const SignUp: FC<AppProps> = ({ setUserState }) => {
       // 正常終了時
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
-      setUserState(true)
+      context.setUserState(true)
       // Topに移動(仮)
       history.push('/')
     } catch {
