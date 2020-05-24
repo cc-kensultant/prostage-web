@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import { Context } from '../../types/contextType'
+import { SignIn } from '../SignIn'
 
 export const GlobalMenu: FC = () => {
   const context = React.useContext(Context)
@@ -32,11 +33,7 @@ export const GlobalMenu: FC = () => {
         <li css={styles.plan}>
           <Link to="/">法人プラン</Link>
         </li>
-        {!context.isSignin && (
-          <li css={styles.signin}>
-            <Link to="/sign-in">ログイン</Link>
-          </li>
-        )}
+        {!context.isSignin && <SignIn />}
         {!context.isSignin && (
           <li css={styles.btn}>
             <Link to="/sign-up">無料会員登録</Link>
@@ -96,26 +93,6 @@ const styles = {
     height: 34px;
     cursor: pointer;
     text-align: center;
-    a {
-      display: block;
-      text-decoration: unset;
-      font-weight: 900;
-      font-size: 14px;
-      line-height: 34px;
-      letter-spacing: 0.1em;
-      color: #555555;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    }
-  `,
-  signin: css`
-    width: 82px;
-    height: 34px;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 24px;
     a {
       display: block;
       text-decoration: unset;
