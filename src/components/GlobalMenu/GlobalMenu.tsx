@@ -4,6 +4,8 @@ import React, { useState, FC } from 'react'
 import { Link } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
+import Notice from '../../images/notifications_none_24px.svg'
+import Email from '../../images/mail_outline_24px.svg'
 import { Context, ContextModal } from '../../types/contextType'
 import { SignIn } from '../SignIn'
 import { SignUp } from '../SignUp'
@@ -36,9 +38,31 @@ export const GlobalMenu: FC = () => {
               <img src={ProstageLogo} alt="Prostage" />
             </Link>
           </li>
-          <li css={styles.plan}>
-            <Link to="/">法人プラン</Link>
-          </li>
+          {context.isSignin && (
+            <li css={styles.mypage}>
+              <Link to="/">マイページ</Link>
+            </li>
+          )}
+          {context.isSignin && (
+            <li css={styles.mypage}>
+              <Link to="/">スキル一覧</Link>
+            </li>
+          )}
+          {context.isSignin && (
+            <li css={styles.mypage}>
+              <Link to="/">スライド検索</Link>
+            </li>
+          )}
+          {context.isSignin && (
+            <li css={styles.mypage}>
+              <Link to="/">コミュニティ</Link>
+            </li>
+          )}
+          {!context.isSignin && (
+            <li css={styles.plan}>
+              <Link to="/">法人プラン</Link>
+            </li>
+          )}
           {!context.isSignin && (
             <li>
               <button
@@ -68,10 +92,31 @@ export const GlobalMenu: FC = () => {
             </li>
           )}
           {context.isSignin && (
+            <li css={styles.userMenu}>
+              <Link to="/">メニュー(未)</Link>
+            </li>
+          )}
+          {context.isSignin && (
             <li css={styles.signout}>
               <button type="button" onClick={signOut}>
                 ログアウト
               </button>
+            </li>
+          )}
+          {context.isSignin && (
+            <li css={styles.notice}>
+              <Link to="/">
+                <label>2</label>
+                <img src={Notice} alt="notice" />
+              </Link>
+            </li>
+          )}
+          {context.isSignin && (
+            <li css={styles.email}>
+              <Link to="/">
+                <label>2</label>
+                <img src={Email} alt="email" />
+              </Link>
             </li>
           )}
         </ul>
@@ -113,6 +158,26 @@ const styles = {
     a img {
       max-width: 60px;
       height: 34px;
+    }
+  `,
+  mypage: css`
+    margin-left: 32px;
+    height: 34px;
+    cursor: pointer;
+    text-align: center;
+    a {
+      font-family: Mplus 1p;
+      display: block;
+      text-decoration: unset;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
     }
   `,
   plan: css`
@@ -178,6 +243,28 @@ const styles = {
       background: #096dd9;
     }
   `,
+  userMenu: css`
+    margin-left: auto;
+    width: 104px;
+    height: 34px;
+    text-align: center;
+    margin-right: 24px;
+    height: 34px;
+    a {
+      font-family: Mplus 1p;
+      display: block;
+      text-decoration: unset;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
+  `,
   signout: css`
     width: 82px;
     height: 34px;
@@ -198,6 +285,76 @@ const styles = {
         outline: none;
         background: #f3f3f3;
       }
+    }
+  `,
+  notice: css`
+    margin-left: 8px;
+    cursor: pointer;
+    a {
+      display: block;
+      height: 34px;
+      position: relative;
+      border-radius: 17px;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
+    a label {
+      position: absolute;
+      z-index: 1;
+      top: -3px;
+      right: -3px;
+      background: #ff0000;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 10px;
+      font-family: Mplus 1p;
+      font-size: 14px;
+      color: #ffffff;
+    }
+    a img {
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+      opacity: 0.54;
+    }
+  `,
+  email: css`
+    margin-left: 8px;
+    cursor: pointer;
+    a {
+      display: block;
+      height: 34px;
+      position: relative;
+      border-radius: 17px;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    }
+    a label {
+      position: absolute;
+      z-index: 1;
+      top: -3px;
+      right: -3px;
+      background: #ff0000;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 10px;
+      font-family: Mplus 1p;
+      font-size: 14px;
+      color: #ffffff;
+    }
+    a img {
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+      opacity: 0.54;
     }
   `,
 }
