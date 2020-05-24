@@ -6,6 +6,7 @@ import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import { Context } from '../../types/contextType'
 import { SignIn } from '../SignIn'
+import { SignUp } from '../SignUp'
 
 export const GlobalMenu: FC = () => {
   const context = React.useContext(Context)
@@ -34,11 +35,7 @@ export const GlobalMenu: FC = () => {
           <Link to="/">法人プラン</Link>
         </li>
         {!context.isSignin && <SignIn />}
-        {!context.isSignin && (
-          <li css={styles.btn}>
-            <Link to="/sign-up">無料会員登録</Link>
-          </li>
-        )}
+        {!context.isSignin && <SignUp />}
         {context.isSignin && (
           <li css={styles.signout}>
             <button type="button" onClick={signOut}>
@@ -104,32 +101,6 @@ const styles = {
       &:focus {
         outline: none;
         background: #f3f3f3;
-      }
-    }
-  `,
-  btn: css`
-    a {
-      display: block;
-      text-align: center;
-      text-decoration: unset;
-      width: 169px;
-      height: 34px;
-      background: #1890ff;
-      border-radius: 3px;
-      font-weight: 900;
-      font-size: 14px;
-      line-height: 34px;
-      letter-spacing: 0.1em;
-      color: #fffdfd;
-      cursor: pointer;
-      border: unset;
-      transition: background 0.2s;
-      outline: none;
-      &:focus {
-        background: #096dd9;
-      }
-      &:hover {
-        background: #096dd9;
       }
     }
   `,
