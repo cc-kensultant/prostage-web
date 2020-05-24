@@ -10,8 +10,6 @@ export default {
 
 export const Default = () => (
   <Router>
-    <ul>
-      <SignUp />
-    </ul>
+    <SignUp />
   </Router>
 )

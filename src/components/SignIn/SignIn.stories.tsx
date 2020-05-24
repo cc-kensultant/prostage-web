@@ -11,9 +11,7 @@ export default {
 export const Default = () => {
   return (
     <Router>
-      <ul>
-        <SignIn />
-      </ul>
+      <SignIn />
     </Router>
   )
 }

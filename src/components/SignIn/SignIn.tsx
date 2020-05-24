@@ -7,16 +7,16 @@ import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { Context } from '../../types/contextType'
+import { Context, ContextModal } from '../../types/contextType'
 import { Modal } from '../Modal'
 
 export const SignIn: FC = () => {
   const context = React.useContext(Context)
+  const contextModal = React.useContext(ContextModal)
   const [state, setState] = useState({
     email: '',
     pass: '',
   })
-  const [isModal, setIsModal] = useState(false)
   const history = useHistory()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.value })
@@ -32,6 +32,7 @@ export const SignIn: FC = () => {
       // TODO:トースト通知など検討
       alert('ログインに成功しました。')
       context.setUserState(true)
+      contextModal.setModalState('')
       // TODO:ログイン後ページに移動
       history.push('/')
     } catch {
@@ -40,104 +41,87 @@ export const SignIn: FC = () => {
     }
   }
   return (
-    <li>
-      <button type="button" css={styles.signinBtn} onClick={() => setIsModal(true)}>
-        ログイン
-      </button>
-      {isModal && (
-        <Modal close={() => setIsModal(false)}>
-          <article css={styles.base}>
-            <button type="button" css={styles.cancelBase} onClick={() => setIsModal(false)}>
-              <img src={Cancel} alt="キャンセル" />
+    <Modal close={() => contextModal.setModalState('')}>
+      <article css={styles.base}>
+        <button
+          type="button"
+          css={styles.cancelBase}
+          onClick={() => contextModal.setModalState('')}
+        >
+          <img src={Cancel} alt="キャンセル" />
+        </button>
+        <h1 css={styles.title}>ログイン</h1>
+        <form css={styles.formBase}>
+          <input
+            type="text"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            css={styles.email}
+            placeholder="メールアドレス"
+          />
+          <input
+            type="password"
+            name="pass"
+            value={state.pass}
+            onChange={handleChange}
+            css={styles.pass}
+            placeholder="パスワード"
+          />
+          <button
+            type="button"
+            css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
+            tabIndex={validation() ? 0 : -1}
+            onClick={onSubmit}
+          >
+            ログイン
+          </button>
+        </form>
+        <p css={styles.forgotInfo}>
+          パスワードをお忘れの場合は
+          <Link css={styles.forgotLink} to="/">
+            こちら
+          </Link>
+        </p>
+        <div css={styles.hrBase}>
+          <hr css={styles.hr} />
+          <div css={styles.hrInfo}>または</div>
+          <hr css={styles.hr} />
+        </div>
+        {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
+        <ul css={styles.iconsBase}>
+          <li css={styles.google}>
+            <button type="button">
+              <img src={GoogleLogo} alt="Google" css={styles.image} />
             </button>
-            <h1 css={styles.title}>ログイン</h1>
-            <form css={styles.formBase}>
-              <input
-                type="text"
-                name="email"
-                value={state.email}
-                onChange={handleChange}
-                css={styles.email}
-                placeholder="メールアドレス"
-              />
-              <input
-                type="password"
-                name="pass"
-                value={state.pass}
-                onChange={handleChange}
-                css={styles.pass}
-                placeholder="パスワード"
-              />
-              <button
-                type="button"
-                css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
-                tabIndex={validation() ? 0 : -1}
-                onClick={onSubmit}
-              >
-                ログイン
-              </button>
-            </form>
-            <p css={styles.forgotInfo}>
-              パスワードをお忘れの場合は
-              <Link css={styles.forgotLink} to="/">
-                こちら
-              </Link>
-            </p>
-            <div css={styles.hrBase}>
-              <hr css={styles.hr} />
-              <div css={styles.hrInfo}>または</div>
-              <hr css={styles.hr} />
-            </div>
-            {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
-            <ul css={styles.iconsBase}>
-              <li css={styles.google}>
-                <button type="button">
-                  <img src={GoogleLogo} alt="Google" css={styles.image} />
-                </button>
-              </li>
-              <li css={styles.facebook}>
-                <button type="button">
-                  <img src={FacebookLogo} alt="Facebook" css={styles.image} />
-                </button>
-              </li>
-              <li css={styles.twitter}>
-                <button type="button">
-                  <img src={TwitterLogo} alt="Twitter" css={styles.image} />
-                </button>
-              </li>
-            </ul>
-            <p css={styles.signupInfo}>
-              アカウントをお持ちでないですか？
-              <Link css={styles.signupLink} to="/sign-up">
-                新規登録
-              </Link>
-            </p>
-          </article>
-        </Modal>
-      )}
-    </li>
+          </li>
+          <li css={styles.facebook}>
+            <button type="button">
+              <img src={FacebookLogo} alt="Facebook" css={styles.image} />
+            </button>
+          </li>
+          <li css={styles.twitter}>
+            <button type="button">
+              <img src={TwitterLogo} alt="Twitter" css={styles.image} />
+            </button>
+          </li>
+        </ul>
+        <p css={styles.signupInfo}>
+          アカウントをお持ちでないですか？
+          <button
+            css={styles.signupLink}
+            type="button"
+            onClick={() => contextModal.setModalState('signup')}
+          >
+            新規登録
+          </button>
+        </p>
+      </article>
+    </Modal>
   )
 }
 
 const styles = {
-  signinBtn: css`
-    width: 82px;
-    height: 34px;
-    cursor: pointer;
-    padding: unset;
-    margin-right: 24px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 34px;
-    letter-spacing: 0.1em;
-    color: #555555;
-    border: unset;
-    background: #ffffff;
-    &:focus {
-      outline: none;
-      background: #f3f3f3;
-    }
-  `,
   base: css`
     width: 404px;
     padding: 18px;
@@ -390,9 +374,13 @@ const styles = {
   `,
   signupLink: css`
     margin-left: 4px;
+    padding: unset;
     color: #2f80ed;
     cursor: pointer;
     outline: none;
+    border: unset;
+    background: #ffffff;
+    text-decoration: underline;
     &:focus {
       background: #f3f3f3;
     }

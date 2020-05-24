@@ -2,22 +2,22 @@
 import { jsx, css } from '@emotion/core'
 import React, { FC, useState } from 'react'
 import { firebase } from '../../utils/firebase'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { Context } from '../../types/contextType'
+import { Context, ContextModal } from '../../types/contextType'
 import { Modal } from '../Modal'
 
 export const SignUp: FC = () => {
   const context = React.useContext(Context)
+  const contextModal = React.useContext(ContextModal)
   const [state, setState] = useState({
     email: '',
     pass: '',
     passConf: '',
   })
-  const [isModal, setIsModal] = useState(false)
   const history = useHistory()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.value })
@@ -32,6 +32,7 @@ export const SignUp: FC = () => {
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
       context.setUserState(true)
+      contextModal.setModalState('')
       // TODO:新規登録後ページに移動
       history.push('/')
     } catch {
@@ -40,117 +41,94 @@ export const SignUp: FC = () => {
     }
   }
   return (
-    <li>
-      <button type="button" css={styles.signupBtn} onClick={() => setIsModal(true)}>
-        無料会員登録
-      </button>
-      {isModal && (
-        <Modal close={() => setIsModal(false)}>
-          <article css={styles.base}>
-            <button type="button" css={styles.cancelBase} onClick={() => setIsModal(false)}>
-              <img src={Cancel} alt="キャンセル" />
+    <Modal close={() => contextModal.setModalState('')}>
+      <article css={styles.base}>
+        <button
+          type="button"
+          css={styles.cancelBase}
+          onClick={() => contextModal.setModalState('')}
+        >
+          <img src={Cancel} alt="キャンセル" />
+        </button>
+        <h1 css={styles.title}>アカウントを作成</h1>
+        <p css={styles.info}>
+          アカウントを作成することにより、利用規規約及び
+          <br />
+          プライバシーポリシーに同意するものとします。
+        </p>
+        <form css={styles.formBase}>
+          <input
+            type="text"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            css={styles.email}
+            placeholder="メールアドレス"
+          />
+          <input
+            type="password"
+            name="pass"
+            value={state.pass}
+            onChange={handleChange}
+            css={styles.pass}
+            placeholder="パスワード"
+          />
+          <input
+            type="password"
+            name="passConf"
+            value={state.passConf}
+            onChange={handleChange}
+            css={styles.passConf}
+            placeholder="確認用パスワード"
+          />
+          <button
+            type="button"
+            css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
+            tabIndex={validation() ? 0 : -1}
+            onClick={onSubmit}
+          >
+            新規登録
+          </button>
+        </form>
+        <div css={styles.hrBase}>
+          <hr css={styles.hr} />
+          <div css={styles.hrInfo}>または</div>
+          <hr css={styles.hr} />
+        </div>
+        {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
+        <ul css={styles.iconsBase}>
+          <li css={styles.google}>
+            <button type="button">
+              <img src={GoogleLogo} alt="Google" css={styles.image} />
             </button>
-            <h1 css={styles.title}>アカウントを作成</h1>
-            <p css={styles.info}>
-              アカウントを作成することにより、利用規規約及び
-              <br />
-              プライバシーポリシーに同意するものとします。
-            </p>
-            <form css={styles.formBase}>
-              <input
-                type="text"
-                name="email"
-                value={state.email}
-                onChange={handleChange}
-                css={styles.email}
-                placeholder="メールアドレス"
-              />
-              <input
-                type="password"
-                name="pass"
-                value={state.pass}
-                onChange={handleChange}
-                css={styles.pass}
-                placeholder="パスワード"
-              />
-              <input
-                type="password"
-                name="passConf"
-                value={state.passConf}
-                onChange={handleChange}
-                css={styles.passConf}
-                placeholder="確認用パスワード"
-              />
-              <button
-                type="button"
-                css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
-                tabIndex={validation() ? 0 : -1}
-                onClick={onSubmit}
-              >
-                新規登録
-              </button>
-            </form>
-            <div css={styles.hrBase}>
-              <hr css={styles.hr} />
-              <div css={styles.hrInfo}>または</div>
-              <hr css={styles.hr} />
-            </div>
-            {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
-            <ul css={styles.iconsBase}>
-              <li css={styles.google}>
-                <button type="button">
-                  <img src={GoogleLogo} alt="Google" css={styles.image} />
-                </button>
-              </li>
-              <li css={styles.facebook}>
-                <button type="button">
-                  <img src={FacebookLogo} alt="Facebook" css={styles.image} />
-                </button>
-              </li>
-              <li css={styles.twitter}>
-                <button type="button">
-                  <img src={TwitterLogo} alt="Twitter" css={styles.image} />
-                </button>
-              </li>
-            </ul>
-            <p css={styles.signinInfo}>
-              すでにアカウントをお持ちですか？
-              <Link css={styles.signinLink} to="/sign-in">
-                ログイン
-              </Link>
-            </p>
-          </article>
-        </Modal>
-      )}
-    </li>
+          </li>
+          <li css={styles.facebook}>
+            <button type="button">
+              <img src={FacebookLogo} alt="Facebook" css={styles.image} />
+            </button>
+          </li>
+          <li css={styles.twitter}>
+            <button type="button">
+              <img src={TwitterLogo} alt="Twitter" css={styles.image} />
+            </button>
+          </li>
+        </ul>
+        <p css={styles.signinInfo}>
+          すでにアカウントをお持ちですか？
+          <button
+            css={styles.signinLink}
+            type="button"
+            onClick={() => contextModal.setModalState('signin')}
+          >
+            ログイン
+          </button>
+        </p>
+      </article>
+    </Modal>
   )
 }
 
 const styles = {
-  signupBtn: css`
-    display: block;
-    text-align: center;
-    text-decoration: unset;
-    width: 169px;
-    height: 34px;
-    background: #1890ff;
-    border-radius: 3px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 34px;
-    letter-spacing: 0.1em;
-    color: #fffdfd;
-    cursor: pointer;
-    border: unset;
-    transition: background 0.2s;
-    outline: none;
-    &:focus {
-      background: #096dd9;
-    }
-    &:hover {
-      background: #096dd9;
-    }
-  `,
   base: css`
     width: 404px;
     padding: 18px;
@@ -413,9 +391,13 @@ const styles = {
   `,
   signinLink: css`
     margin-left: 4px;
+    padding: unset;
     color: #2f80ed;
     cursor: pointer;
     outline: none;
+    border: unset;
+    background: #ffffff;
+    text-decoration: underline;
     &:focus {
       background: #f3f3f3;
     }
