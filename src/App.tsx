@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { GlobalMenu } from './components/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
-import { SignUp } from './pages/SignUp'
 import { firebase } from './utils/firebase'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { jsx } from '@emotion/core'
@@ -40,9 +39,6 @@ const App = () => {
           </Route>
           <Route exact path="/sign-in">
             <SignIn />
-          </Route>
-          <Route exact path="/sign-up">
-            <SignUp />
           </Route>
         </Switch>
       </Context.Provider>
