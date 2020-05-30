@@ -7,12 +7,13 @@ import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { Context, ContextModal } from '../../types/contextType'
+import { UserContext } from '../../contexts/user'
+import { ModalContext } from '../../contexts/modal'
 import { Modal } from '../Modal'
 
 export const SignUp: FC = () => {
-  const context = React.useContext(Context)
-  const contextModal = React.useContext(ContextModal)
+  const { setUserState } = React.useContext(UserContext)
+  const { setModalState } = React.useContext(ModalContext)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -31,8 +32,8 @@ export const SignUp: FC = () => {
       await firebase.auth().createUserWithEmailAndPassword(state.email, state.pass)
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
-      context.setUserState(true)
-      contextModal.setModalState('')
+      setUserState(true)
+      setModalState('')
       // TODO:新規登録後ページに移動
       history.push('/')
     } catch {
@@ -41,13 +42,9 @@ export const SignUp: FC = () => {
     }
   }
   return (
-    <Modal close={() => contextModal.setModalState('')}>
+    <Modal close={() => setModalState('')}>
       <article css={styles.article}>
-        <button
-          type="button"
-          css={styles.cancel.base}
-          onClick={() => contextModal.setModalState('')}
-        >
+        <button type="button" css={styles.cancel.base} onClick={() => setModalState('')}>
           <img src={Cancel} alt="キャンセル" css={styles.cancel.img} />
         </button>
         <h1 css={styles.title}>アカウントを作成</h1>
@@ -115,11 +112,7 @@ export const SignUp: FC = () => {
         </ul>
         <p css={styles.signin.text}>
           すでにアカウントをお持ちですか？
-          <button
-            css={styles.signin.link}
-            type="button"
-            onClick={() => contextModal.setModalState('signin')}
-          >
+          <button css={styles.signin.link} type="button" onClick={() => setModalState('signin')}>
             ログイン
           </button>
         </p>

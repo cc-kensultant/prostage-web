@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Context } from '../../types/contextType'
+import { UserContext } from '../../contexts/user'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { GlobalMenu } from './GlobalMenu'
@@ -13,9 +13,9 @@ export const LoggedIn: FC = () => {
   const setUserState = () => {}
   return (
     <Router>
-      <Context.Provider value={{ isSignin: true, setUserState }}>
+      <UserContext.Provider value={{ isSignin: true, setUserState }}>
         <GlobalMenu />
-      </Context.Provider>
+      </UserContext.Provider>
     </Router>
   )
 }
@@ -24,9 +24,9 @@ export const LoggedOut: FC = () => {
   const setUserState = () => {}
   return (
     <Router>
-      <Context.Provider value={{ isSignin: false, setUserState }}>
+      <UserContext.Provider value={{ isSignin: false, setUserState }}>
         <GlobalMenu />
-      </Context.Provider>
+      </UserContext.Provider>
     </Router>
   )
 }

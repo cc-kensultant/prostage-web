@@ -7,7 +7,7 @@ import { SignUp } from './pages/SignUp'
 import { firebase } from './utils/firebase'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { jsx } from '@emotion/core'
-import { Context } from './types/contextType'
+import { UserContext } from './contexts/user'
 
 const App = () => {
   const [user, setUser] = useState(false)
@@ -25,7 +25,7 @@ const App = () => {
   }, [])
   return (
     <Router>
-      <Context.Provider value={{ isSignin: user, setUserState }}>
+      <UserContext.Provider value={{ isSignin: user, setUserState }}>
         <GlobalMenu />
         {/*
           A <Switch> looks through all its children <Route>
@@ -45,7 +45,7 @@ const App = () => {
             <SignUp />
           </Route>
         </Switch>
-      </Context.Provider>
+      </UserContext.Provider>
     </Router>
   )
 }

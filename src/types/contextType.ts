@@ -1,21 +1,9 @@
-import React from 'react'
-
-export type contextType = {
+export type user = {
   isSignin: boolean
   setUserState: (state: boolean) => void
 }
 
-export const Context = React.createContext<contextType>({
-  isSignin: false,
-  setUserState: () => {},
-})
-
-export type contextTypeModal = {
+export type modal = {
   modal: String
   setModalState: (name: string) => void
 }
-
-export const ContextModal = React.createContext<contextTypeModal>({
-  modal: '',
-  setModalState: () => {},
-})

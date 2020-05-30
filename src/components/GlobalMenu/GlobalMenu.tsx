@@ -6,12 +6,13 @@ import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import Notice from '../../images/notifications_none_24px.svg'
 import Email from '../../images/mail_outline_24px.svg'
-import { Context, ContextModal } from '../../types/contextType'
+import { UserContext } from '../../contexts/user'
+import { ModalContext } from '../../contexts/modal'
 import { SignIn } from '../SignIn'
 import { SignUp } from '../SignUp'
 
 export const GlobalMenu: FC = () => {
-  const context = React.useContext(Context)
+  const { isSignin, setUserState } = React.useContext(UserContext)
   const [modal, setModal] = useState('')
   const setModalState = (name: string) => {
     setModal(name)
@@ -22,7 +23,7 @@ export const GlobalMenu: FC = () => {
         try {
           await firebase.auth().signOut()
           alert('ログアウトしました')
-          context.setUserState(false)
+          setUserState(false)
         } catch {
           alert('ログアウトに失敗しました')
         }
@@ -31,14 +32,14 @@ export const GlobalMenu: FC = () => {
   }
   return (
     <header css={styles.base}>
-      <ContextModal.Provider value={{ modal, setModalState }}>
+      <ModalContext.Provider value={{ modal, setModalState }}>
         <ul id="nav" css={styles.nav.base}>
           <li css={(styles.nav.list, styles.logo.base)}>
             <Link to="" css={styles.logo.link}>
               <img src={ProstageLogo} alt="Prostage" css={styles.logo.img} />
             </Link>
           </li>
-          {context.isSignin && (
+          {isSignin && (
             <Fragment>
               <li css={(styles.nav.list, styles.mypage.base)}>
                 <Link to="/" css={styles.mypage.link}>
@@ -87,7 +88,7 @@ export const GlobalMenu: FC = () => {
               </li>
             </Fragment>
           )}
-          {!context.isSignin && (
+          {!isSignin && (
             <Fragment>
               <li css={(styles.nav.list, styles.plan.base)}>
                 <Link to="/" css={styles.plan.link}>
@@ -121,7 +122,7 @@ export const GlobalMenu: FC = () => {
             </Fragment>
           )}
         </ul>
-      </ContextModal.Provider>
+      </ModalContext.Provider>
     </header>
   )
 }
