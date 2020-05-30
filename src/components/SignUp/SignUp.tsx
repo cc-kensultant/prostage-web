@@ -42,13 +42,13 @@ export const SignUp: FC = () => {
   }
   return (
     <Modal close={() => contextModal.setModalState('')}>
-      <article css={styles.base}>
+      <article css={styles.article}>
         <button
           type="button"
-          css={styles.cancelBase}
+          css={styles.cancel.base}
           onClick={() => contextModal.setModalState('')}
         >
-          <img src={Cancel} alt="キャンセル" />
+          <img src={Cancel} alt="キャンセル" css={styles.cancel.img} />
         </button>
         <h1 css={styles.title}>アカウントを作成</h1>
         <p css={styles.info}>
@@ -56,13 +56,13 @@ export const SignUp: FC = () => {
           <br />
           プライバシーポリシーに同意するものとします。
         </p>
-        <form css={styles.formBase}>
+        <form css={styles.form.base}>
           <input
             type="text"
             name="email"
             value={state.email}
             onChange={handleChange}
-            css={styles.email}
+            css={styles.form.email}
             placeholder="メールアドレス"
           />
           <input
@@ -70,7 +70,7 @@ export const SignUp: FC = () => {
             name="pass"
             value={state.pass}
             onChange={handleChange}
-            css={styles.pass}
+            css={styles.form.pass}
             placeholder="パスワード"
           />
           <input
@@ -78,45 +78,45 @@ export const SignUp: FC = () => {
             name="passConf"
             value={state.passConf}
             onChange={handleChange}
-            css={styles.passConf}
+            css={styles.form.passConf}
             placeholder="確認用パスワード"
           />
           <button
             type="button"
-            css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
+            css={validation() ? styles.form.btn : css(styles.form.btn, styles.form.btnDisable)}
             tabIndex={validation() ? 0 : -1}
             onClick={onSubmit}
           >
             新規登録
           </button>
         </form>
-        <div css={styles.hrBase}>
-          <hr css={styles.hr} />
-          <div css={styles.hrInfo}>または</div>
-          <hr css={styles.hr} />
+        <div css={styles.hr.base}>
+          <hr css={styles.hr.content} />
+          <div css={styles.hr.text}>または</div>
+          <hr css={styles.hr.content} />
         </div>
         {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
-        <ul css={styles.iconsBase}>
-          <li css={styles.google}>
-            <button type="button">
-              <img src={GoogleLogo} alt="Google" css={styles.image} />
+        <ul css={styles.icons.base}>
+          <li css={styles.icons.google}>
+            <button type="button" css={styles.icons.button}>
+              <img src={GoogleLogo} alt="Google" css={styles.icons.img} />
             </button>
           </li>
-          <li css={styles.facebook}>
-            <button type="button">
-              <img src={FacebookLogo} alt="Facebook" css={styles.image} />
+          <li css={styles.icons.facebook}>
+            <button type="button" css={styles.icons.button}>
+              <img src={FacebookLogo} alt="Facebook" css={styles.icons.img} />
             </button>
           </li>
-          <li css={styles.twitter}>
-            <button type="button">
-              <img src={TwitterLogo} alt="Twitter" css={styles.image} />
+          <li css={styles.icons.twitter}>
+            <button type="button" css={styles.icons.button}>
+              <img src={TwitterLogo} alt="Twitter" css={styles.icons.img} />
             </button>
           </li>
         </ul>
-        <p css={styles.signinInfo}>
+        <p css={styles.signin.text}>
           すでにアカウントをお持ちですか？
           <button
-            css={styles.signinLink}
+            css={styles.signin.link}
             type="button"
             onClick={() => contextModal.setModalState('signin')}
           >
@@ -129,35 +129,33 @@ export const SignUp: FC = () => {
 }
 
 const styles = {
-  base: css`
+  article: css`
     width: 404px;
     padding: 18px;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 0px 6px rgb(0, 0, 0, 0.1);
   `,
-  cancelBase: css`
-    display: block;
-    margin-left: auto;
-    padding: unset;
-    border: none;
-    background: none;
-    img {
+  cancel: {
+    base: css`
+      display: block;
+      margin-left: auto;
+      padding: unset;
+      border: none;
+      background: none;
+      transition: opacity 0.2s;
+      cursor: pointer;
+      &:hover,
+      &:focus {
+        outline: none;
+        opacity: 0.5;
+      }
+    `,
+    img: css`
       width: 20px;
       height: 20px;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      &:hover {
-        opacity: 0.5;
-      }
-    }
-    &:focus {
-      outline: none;
-      img {
-        opacity: 0.5;
-      }
-    }
-  `,
+    `,
+  },
   title: css`
     margin-top: -12px;
     padding: 0 16px;
@@ -180,135 +178,178 @@ const styles = {
     color: #555555;
     cursor: default;
   `,
-  formBase: css`
-    padding: 0 16px;
-    margin-top: 36px;
-  `,
-  email: css`
-    padding: 14px;
-    width: 100%;
-    height: 50px;
-    border: 1px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 5px;
-    outline: none;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 22px;
-    color: #555555;
-    &:focus {
-      border: 1px solid #1890FF;
-      caret-color: #1890FF;
-    },
-  `,
-  pass: css`
-    margin-top: 15px;
-    padding: 14px;
-    width: 100%;
-    height: 50px;
-    border: 1px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 5px;
-    outline: none;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 22px;
-    color: #555555;
-    &:focus {
-      border: 1px solid #1890FF;
-      caret-color: #1890FF;
-    },
-  `,
-  passConf: css`
-    margin-top: 15px;
-    padding: 14px;
-    width: 100%;
-    height: 50px;
-    border: 1px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 5px;
-    outline: none;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 22px;
-    color: #555555;
-    &:focus {
-      border: 1px solid #1890FF;
-      caret-color: #1890FF;
-    },
-  `,
-  btn: css`
-    margin-top: 15px;
-    width: 100%;
-    height: 56px;
-    background: #d9d9d9;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 36px;
-    color: #3a3a3a;
-    cursor: pointer;
-    border: unset;
-    transition: background 0.2s, opacity 0.2s;
-    outline: none;
-    opacity: 1;
-    &:hover {
-      background: #bfbfbf;
-    }
-    &:focus {
-      background: #bfbfbf;
-    }
-  `,
-  btnDisable: css`
-    opacity: 0.4 !important;
-    cursor: default !important;
-    &:hover {
-      background: #D9D9D9 !important;
-    },
-  `,
-  hrBase: css`
-    margin-top: 34px;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-  `,
-  hr: css`
-    flex-glow: 1 !important;
-    width: 100%;
-  `,
-  hrInfo: css`
-    margin: 0 28px;
-    min-width: 36px;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 18px;
-    color: #555555;
-    cursor: default;
-  `,
-  iconsBase: css`
-    margin-top: 30px;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  `,
-  google: css`
-    background: #f5f5f5;
-    border: 1px solid #1f212b;
-    border-radius: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    button {
+  form: {
+    base: css`
+      padding: 0 16px;
+      margin-top: 46px;
+    `,
+    email: css`
+      padding: 14px;
+      width: 100%;
+      height: 50px;
+      border: 1px solid #c4c4c4;
+      box-sizing: border-box;
+      border-radius: 5px;
+      outline: none;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 22px;
+      color: #555555;
+      &:focus {
+        border: 1px solid #1890FF;
+        caret-color: #1890FF;
+      },
+    `,
+    pass: css`
+      margin-top: 15px;
+      padding: 14px;
+      width: 100%;
+      height: 50px;
+      border: 1px solid #c4c4c4;
+      box-sizing: border-box;
+      border-radius: 5px;
+      outline: none;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 22px;
+      color: #555555;
+      &:focus {
+        border: 1px solid #1890FF;
+        caret-color: #1890FF;
+      },
+    `,
+    passConf: css`
+      margin-top: 15px;
+      padding: 14px;
+      width: 100%;
+      height: 50px;
+      border: 1px solid #c4c4c4;
+      box-sizing: border-box;
+      border-radius: 5px;
+      outline: none;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 22px;
+      color: #555555;
+      &:focus {
+        border: 1px solid #1890FF;
+        caret-color: #1890FF;
+      },
+    `,
+    btn: css`
+      margin-top: 15px;
+      width: 100%;
+      height: 56px;
+      background: #d9d9d9;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      line-height: 36px;
+      color: #3a3a3a;
+      cursor: pointer;
+      border: unset;
+      transition: background 0.2s, opacity 0.2s;
+      outline: none;
+      opacity: 1;
+      &:hover,
+      &:focus {
+        background: #bfbfbf;
+      }
+    `,
+    btnDisable: css`
+      opacity: 0.4 !important;
+      cursor: default !important;
+      &:hover {
+        background: #d9d9d9 !important;
+      }
+    `,
+  },
+  forgot: {
+    text: css`
+      margin-top: 15px;
+      padding: 0 16px;
+      text-align: center;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 18px;
+      color: #555555;
+      cursor: default;
+    `,
+    link: css`
+      margin-left: 4px;
+      color: #2f80ed;
+      cursor: pointer;
+      outline: none;
+      &:focus {
+        background: #f3f3f3;
+      }
+    `,
+  },
+  hr: {
+    base: css`
+      margin-top: 42px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+    `,
+    content: css`
+      flex-glow: 1 !important;
+      width: 100%;
+    `,
+    text: css`
+      margin: 0 28px;
+      min-width: 36px;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 18px;
+      color: #555555;
+      cursor: default;
+    `,
+  },
+  icons: {
+    base: css`
+      margin-top: 30px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    `,
+    google: css`
+      background: #f5f5f5;
+      border: 1px solid #1f212b;
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `,
+    facebook: css`
+      background: #f5f5f5;
+      border: 1px solid #317bff;
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `,
+    twitter: css`
+      background: #f5f5f5;
+      border: 1px solid #00a9f4;
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `,
+    button: css`
       width: 94px;
       height: 45px;
       cursor: pointer;
@@ -323,83 +364,37 @@ const styles = {
       &:focus {
         background: #d9d9d9;
       }
-    }
-  `,
-  facebook: css`
-    background: #f5f5f5;
-    border: 1px solid #317bff;
-    border-radius: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    button {
-      width: 94px;
-      height: 45px;
-      cursor: pointer;
-      border: none;
-      background: none;
+    `,
+    img: css`
+      width: 40px;
+      height: 40px;
+    `,
+  },
+  signin: {
+    text: css`
+      margin-top: 36px;
+      padding: 0 16px;
+      text-align: center;
+      font-family: Mplus 1p;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 18px;
+      color: #555555;
+      cursor: default;
+    `,
+    link: css`
+      margin-left: 4px;
       padding: unset;
-      outline: none;
-      transition: background 0.2s;
-      &:hover {
-        background: #d9d9d9;
-      }
-      &:focus {
-        background: #d9d9d9;
-      }
-    }
-  `,
-  twitter: css`
-    background: #f5f5f5;
-    border: 1px solid #00a9f4;
-    border-radius: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    button {
-      width: 94px;
-      height: 45px;
+      color: #2f80ed;
       cursor: pointer;
-      border: none;
-      background: none;
-      padding: unset;
       outline: none;
-      transition: background 0.2s;
-      &:hover {
-        background: #d9d9d9;
-      }
+      border: unset;
+      background: #ffffff;
+      text-decoration: underline;
       &:focus {
-        background: #d9d9d9;
+        background: #f3f3f3;
       }
-    }
-  `,
-  image: css`
-    width: 40px;
-    height: 40px;
-  `,
-  signinInfo: css`
-    margin-top: 36px;
-    padding: 0 16px;
-    text-align: center;
-    font-family: Mplus 1p;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 18px;
-    color: #555555;
-    cursor: default;
-  `,
-  signinLink: css`
-    margin-left: 4px;
-    padding: unset;
-    color: #2f80ed;
-    cursor: pointer;
-    outline: none;
-    border: unset;
-    background: #ffffff;
-    text-decoration: underline;
-    &:focus {
-      background: #f3f3f3;
-    }
-  `,
+    `,
+  },
 }

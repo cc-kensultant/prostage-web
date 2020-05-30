@@ -32,54 +32,69 @@ export const GlobalMenu: FC = () => {
   return (
     <header css={styles.base}>
       <ContextModal.Provider value={{ modal, setModalState }}>
-        <ul id="nav" css={styles.nav}>
-          <li css={styles.img}>
-            <Link to="">
-              <img src={ProstageLogo} alt="Prostage" />
+        <ul id="nav" css={styles.nav.base}>
+          <li css={(styles.nav.list, styles.logo.base)}>
+            <Link to="" css={styles.logo.link}>
+              <img src={ProstageLogo} alt="Prostage" css={styles.logo.img} />
             </Link>
           </li>
           {context.isSignin && (
             <Fragment>
-              <li css={styles.mypage}>
-                <Link to="/">マイページ</Link>
+              <li css={(styles.nav.list, styles.mypage.base)}>
+                <Link to="/" css={styles.mypage.link}>
+                  マイページ
+                </Link>
               </li>
-              <li css={styles.mypage}>
-                <Link to="/">スキル一覧</Link>
+              {/* TODO:CSS調整 */}
+              <li css={(styles.nav.list, styles.mypage.base)}>
+                <Link to="/" css={styles.mypage.link}>
+                  スキル一覧
+                </Link>
               </li>
-              <li css={styles.mypage}>
-                <Link to="/">スライド検索</Link>
+              {/* TODO:CSS調整 */}
+              <li css={(styles.nav.list, styles.mypage.base)}>
+                <Link to="/" css={styles.mypage.link}>
+                  スライド検索
+                </Link>
               </li>
-              <li css={styles.mypage}>
-                <Link to="/">コミュニティ</Link>
+              {/* TODO:CSS調整 */}
+              <li css={(styles.nav.list, styles.mypage.base)}>
+                <Link to="/" css={styles.mypage.link}>
+                  コミュニティ
+                </Link>
               </li>
-              <li css={styles.userMenu}>
-                <Link to="/">メニュー(未)</Link>
+              <li css={(styles.nav.list, styles.userMenu.base)}>
+                <Link to="/" css={styles.userMenu.link}>
+                  メニュー(未)
+                </Link>
               </li>
-              <li css={styles.signout}>
-                <button type="button" onClick={signOut}>
+              <li css={(styles.nav.list, styles.signout.base)}>
+                <button type="button" onClick={signOut} css={styles.signout.button}>
                   ログアウト
                 </button>
               </li>
-              <li css={styles.notice}>
-                <Link to="/">
-                  <label>2</label>
-                  <img src={Notice} alt="notice" />
+              <li css={(styles.nav.list, styles.notice.base)}>
+                <Link to="/" css={styles.notice.link}>
+                  <label css={styles.notice.label}>2</label>
+                  <img src={Notice} alt="notice" css={styles.notice.img} />
                 </Link>
               </li>
-              <li css={styles.email}>
-                <Link to="/">
-                  <label>2</label>
-                  <img src={Email} alt="email" />
+              <li css={(styles.nav.list, styles.email.base)}>
+                <Link to="/" css={styles.email.link}>
+                  <label css={styles.email.label}>2</label>
+                  <img src={Email} alt="email" css={styles.email.img} />
                 </Link>
               </li>
             </Fragment>
           )}
           {!context.isSignin && (
             <Fragment>
-              <li css={styles.plan}>
-                <Link to="/">法人プラン</Link>
+              <li css={(styles.nav.list, styles.plan.base)}>
+                <Link to="/" css={styles.plan.link}>
+                  法人プラン
+                </Link>
               </li>
-              <li>
+              <li css={styles.nav.list}>
                 <button
                   type="button"
                   css={styles.signinBtn}
@@ -91,7 +106,7 @@ export const GlobalMenu: FC = () => {
                 </button>
                 {modal === 'signin' && <SignIn />}
               </li>
-              <li>
+              <li css={styles.nav.list}>
                 <button
                   type="button"
                   css={styles.signupBtn}
@@ -119,39 +134,45 @@ const styles = {
     box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.12);
     z-index: 1;
   `,
-  nav: css`
-    height: 34px;
-    padding: 13px 24px;
-    margin: unset;
-    display: flex;
-    align-items: center;
-    list-style: none;
-    li {
+  nav: {
+    base: css`
+      height: 34px;
+      padding: 13px 24px;
+      margin: unset;
+      display: flex;
+      align-items: center;
+      list-style: none;
+    `,
+    list: css`
       height: 100%;
-    }
-  `,
-  img: css`
-    margin-left: 8px;
-    cursor: pointer;
-    a {
+    `,
+  },
+  logo: {
+    base: css`
+      margin-left: 8px;
+      cursor: pointer;
+    `,
+    link: css`
       display: block;
       height: 34px;
       &:focus {
         outline: none;
         background: #f3f3f3;
       }
-    }
-    a img {
+    `,
+    img: css`
       max-width: 60px;
       height: 34px;
-    }
-  `,
-  mypage: css`
-    margin-left: 32px;
-    height: 34px;
-    cursor: pointer;
-    text-align: center;
-    a {
+    `,
+  },
+  mypage: {
+    base: css`
+      margin-left: 32px;
+      height: 34px;
+      cursor: pointer;
+      text-align: center;
+    `,
+    link: css`
       font-family: Mplus 1p;
       display: block;
       text-decoration: unset;
@@ -164,16 +185,140 @@ const styles = {
         outline: none;
         background: #f3f3f3;
       }
-    }
-  `,
-  plan: css`
-    margin-right: 44px;
-    margin-left: auto;
-    width: 82px;
-    height: 34px;
-    cursor: pointer;
-    text-align: center;
-    a {
+    `,
+  },
+  userMenu: {
+    base: css`
+      margin-left: auto;
+      width: 104px;
+      height: 34px;
+      text-align: center;
+      margin-right: 24px;
+      height: 34px;
+    `,
+    link: css`
+      font-family: Mplus 1p;
+      display: block;
+      text-decoration: unset;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    `,
+  },
+  signout: {
+    base: css`
+      width: 82px;
+      height: 34px;
+      text-align: center;
+      margin-right: 24px;
+    `,
+    button: css`
+      cursor: pointer;
+      padding: unset;
+      text-decoration: unset;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 34px;
+      letter-spacing: 0.1em;
+      color: #555555;
+      background: none;
+      border: none;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    `,
+  },
+  notice: {
+    base: css`
+      margin-left: 8px;
+      cursor: pointer;
+    `,
+    link: css`
+      display: block;
+      height: 34px;
+      position: relative;
+      border-radius: 17px;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    `,
+    label: css`
+      position: absolute;
+      z-index: 1;
+      top: -3px;
+      right: -3px;
+      background: #ff0000;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 10px;
+      font-family: Mplus 1p;
+      font-size: 14px;
+      color: #ffffff;
+    `,
+    img: css`
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+      opacity: 0.54;
+    `,
+  },
+  email: {
+    base: css`
+      margin-left: 8px;
+      cursor: pointer;
+    `,
+    link: css`
+      display: block;
+      height: 34px;
+      position: relative;
+      border-radius: 17px;
+      &:focus {
+        outline: none;
+        background: #f3f3f3;
+      }
+    `,
+    label: css`
+      position: absolute;
+      z-index: 1;
+      top: -3px;
+      right: -3px;
+      background: #ff0000;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 10px;
+      font-family: Mplus 1p;
+      font-size: 14px;
+      color: #ffffff;
+    `,
+    img: css`
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+      opacity: 0.54;
+    `,
+  },
+  plan: {
+    base: css`
+      margin-right: 44px;
+      margin-left: auto;
+      width: 82px;
+      height: 34px;
+      cursor: pointer;
+      text-align: center;
+    `,
+    link: css`
       display: block;
       text-decoration: unset;
       font-weight: 900;
@@ -185,8 +330,8 @@ const styles = {
         outline: none;
         background: #f3f3f3;
       }
-    }
-  `,
+    `,
+  },
   signinBtn: css`
     width: 82px;
     height: 34px;
@@ -227,120 +372,6 @@ const styles = {
     }
     &:hover {
       background: #096dd9;
-    }
-  `,
-  userMenu: css`
-    margin-left: auto;
-    width: 104px;
-    height: 34px;
-    text-align: center;
-    margin-right: 24px;
-    height: 34px;
-    a {
-      font-family: Mplus 1p;
-      display: block;
-      text-decoration: unset;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 34px;
-      letter-spacing: 0.1em;
-      color: #555555;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    }
-  `,
-  signout: css`
-    width: 82px;
-    height: 34px;
-    text-align: center;
-    margin-right: 24px;
-    button {
-      cursor: pointer;
-      padding: unset;
-      text-decoration: unset;
-      font-weight: 900;
-      font-size: 14px;
-      line-height: 34px;
-      letter-spacing: 0.1em;
-      color: #555555;
-      background: none;
-      border: none;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    }
-  `,
-  notice: css`
-    margin-left: 8px;
-    cursor: pointer;
-    a {
-      display: block;
-      height: 34px;
-      position: relative;
-      border-radius: 17px;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    }
-    a label {
-      position: absolute;
-      z-index: 1;
-      top: -3px;
-      right: -3px;
-      background: #ff0000;
-      width: 20px;
-      height: 20px;
-      text-align: center;
-      line-height: 20px;
-      border-radius: 10px;
-      font-family: Mplus 1p;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    a img {
-      padding: 5px;
-      width: 24px;
-      height: 24px;
-      opacity: 0.54;
-    }
-  `,
-  email: css`
-    margin-left: 8px;
-    cursor: pointer;
-    a {
-      display: block;
-      height: 34px;
-      position: relative;
-      border-radius: 17px;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    }
-    a label {
-      position: absolute;
-      z-index: 1;
-      top: -3px;
-      right: -3px;
-      background: #ff0000;
-      width: 20px;
-      height: 20px;
-      text-align: center;
-      line-height: 20px;
-      border-radius: 10px;
-      font-family: Mplus 1p;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    a img {
-      padding: 5px;
-      width: 24px;
-      height: 24px;
-      opacity: 0.54;
     }
   `,
 }
