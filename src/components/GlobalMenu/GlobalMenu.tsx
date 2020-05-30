@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import React, { useState, FC } from 'react'
+import React, { useState, FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
@@ -39,85 +39,71 @@ export const GlobalMenu: FC = () => {
             </Link>
           </li>
           {context.isSignin && (
-            <li css={styles.mypage}>
-              <Link to="/">マイページ</Link>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.mypage}>
-              <Link to="/">スキル一覧</Link>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.mypage}>
-              <Link to="/">スライド検索</Link>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.mypage}>
-              <Link to="/">コミュニティ</Link>
-            </li>
-          )}
-          {!context.isSignin && (
-            <li css={styles.plan}>
-              <Link to="/">法人プラン</Link>
-            </li>
-          )}
-          {!context.isSignin && (
-            <li>
-              <button
-                type="button"
-                css={styles.signinBtn}
-                onClick={() => {
-                  setModal('signin')
-                }}
-              >
-                ログイン
-              </button>
-              {modal === 'signin' && <SignIn />}
-            </li>
+            <Fragment>
+              <li css={styles.mypage}>
+                <Link to="/">マイページ</Link>
+              </li>
+              <li css={styles.mypage}>
+                <Link to="/">スキル一覧</Link>
+              </li>
+              <li css={styles.mypage}>
+                <Link to="/">スライド検索</Link>
+              </li>
+              <li css={styles.mypage}>
+                <Link to="/">コミュニティ</Link>
+              </li>
+              <li css={styles.userMenu}>
+                <Link to="/">メニュー(未)</Link>
+              </li>
+              <li css={styles.signout}>
+                <button type="button" onClick={signOut}>
+                  ログアウト
+                </button>
+              </li>
+              <li css={styles.notice}>
+                <Link to="/">
+                  <label>2</label>
+                  <img src={Notice} alt="notice" />
+                </Link>
+              </li>
+              <li css={styles.email}>
+                <Link to="/">
+                  <label>2</label>
+                  <img src={Email} alt="email" />
+                </Link>
+              </li>
+            </Fragment>
           )}
           {!context.isSignin && (
-            <li>
-              <button
-                type="button"
-                css={styles.signupBtn}
-                onClick={() => {
-                  setModal('signup')
-                }}
-              >
-                無料会員登録
-              </button>
-              {modal === 'signup' && <SignUp />}
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.userMenu}>
-              <Link to="/">メニュー(未)</Link>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.signout}>
-              <button type="button" onClick={signOut}>
-                ログアウト
-              </button>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.notice}>
-              <Link to="/">
-                <label>2</label>
-                <img src={Notice} alt="notice" />
-              </Link>
-            </li>
-          )}
-          {context.isSignin && (
-            <li css={styles.email}>
-              <Link to="/">
-                <label>2</label>
-                <img src={Email} alt="email" />
-              </Link>
-            </li>
+            <Fragment>
+              <li css={styles.plan}>
+                <Link to="/">法人プラン</Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  css={styles.signinBtn}
+                  onClick={() => {
+                    setModal('signin')
+                  }}
+                >
+                  ログイン
+                </button>
+                {modal === 'signin' && <SignIn />}
+              </li>
+              <li>
+                <button
+                  type="button"
+                  css={styles.signupBtn}
+                  onClick={() => {
+                    setModal('signup')
+                  }}
+                >
+                  無料会員登録
+                </button>
+                {modal === 'signup' && <SignUp />}
+              </li>
+            </Fragment>
           )}
         </ul>
       </ContextModal.Provider>
