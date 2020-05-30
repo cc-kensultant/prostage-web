@@ -7,13 +7,11 @@ import ProstageLogo from '../../images/ProstageLogo.svg'
 import Notice from '../../images/notifications_none_24px.svg'
 import Email from '../../images/mail_outline_24px.svg'
 import { UserContext } from '../../contexts/user'
-import { ModalContext } from '../../contexts/modal'
 import { SignIn } from '../SignIn'
 import { SignUp } from '../SignUp'
 
 export const GlobalMenu: FC = () => {
   const { isSignin, setUserState } = React.useContext(UserContext)
-  const { modalMode, setModalState } = React.useContext(ModalContext)
   const signOut = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -92,28 +90,10 @@ export const GlobalMenu: FC = () => {
               </Link>
             </li>
             <li css={styles.nav.list}>
-              <button
-                type="button"
-                css={styles.signinBtn}
-                onClick={() => {
-                  setModalState('signin')
-                }}
-              >
-                ログイン
-              </button>
-              {modalMode === 'signin' && <SignIn />}
+              <SignIn />
             </li>
             <li css={styles.nav.list}>
-              <button
-                type="button"
-                css={styles.signupBtn}
-                onClick={() => {
-                  setModalState('signup')
-                }}
-              >
-                無料会員登録
-              </button>
-              {modalMode === 'signup' && <SignUp />}
+              <SignUp />
             </li>
           </Fragment>
         )}
@@ -328,46 +308,4 @@ const styles = {
       }
     `,
   },
-  signinBtn: css`
-    width: 82px;
-    height: 34px;
-    cursor: pointer;
-    padding: unset;
-    margin-right: 24px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 34px;
-    letter-spacing: 0.1em;
-    color: #555555;
-    border: unset;
-    background: #ffffff;
-    &:focus {
-      outline: none;
-      background: #f3f3f3;
-    }
-  `,
-  signupBtn: css`
-    display: block;
-    text-align: center;
-    text-decoration: unset;
-    width: 169px;
-    height: 34px;
-    background: #1890ff;
-    border-radius: 3px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 34px;
-    letter-spacing: 0.1em;
-    color: #fffdfd;
-    cursor: pointer;
-    border: unset;
-    transition: background 0.2s;
-    outline: none;
-    &:focus {
-      background: #096dd9;
-    }
-    &:hover {
-      background: #096dd9;
-    }
-  `,
 }

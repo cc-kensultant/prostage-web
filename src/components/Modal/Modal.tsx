@@ -1,23 +1,31 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
+import ReactDOM from 'react-dom'
 
 export type props = {
   onClose: () => void
 }
 
-export const Modal: FC<props> = ({ onClose, children }) => (
-  <div css={styles.background} onClick={onClose}>
-    <div
-      css={styles.contents}
-      onClick={(e) => {
-        e.stopPropagation()
-      }}
-    >
-      {children}
-    </div>
-  </div>
-)
+export const Modal: FC<props> = ({ onClose, children }) => {
+  return (
+    <Fragment>
+      {ReactDOM.createPortal(
+        <div css={styles.background} onClick={onClose}>
+          <div
+            css={styles.contents}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+          >
+            {children}
+          </div>
+        </div>,
+        document.getElementById('modal')!,
+      )}
+    </Fragment>
+  )
+}
 
 const styles = {
   background: css`
@@ -27,6 +35,7 @@ const styles = {
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 2;
   `,
   contents: css`
     position: fixed;
