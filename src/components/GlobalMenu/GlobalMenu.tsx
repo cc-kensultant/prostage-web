@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import React, { useState, FC, Fragment } from 'react'
+import React, { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
@@ -13,10 +13,7 @@ import { SignUp } from '../SignUp'
 
 export const GlobalMenu: FC = () => {
   const { isSignin, setUserState } = React.useContext(UserContext)
-  const [modal, setModal] = useState('')
-  const setModalState = (name: string) => {
-    setModal(name)
-  }
+  const { modalMode, setModalState } = React.useContext(ModalContext)
   const signOut = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -32,97 +29,95 @@ export const GlobalMenu: FC = () => {
   }
   return (
     <header css={styles.base}>
-      <ModalContext.Provider value={{ modal, setModalState }}>
-        <ul id="nav" css={styles.nav.base}>
-          <li css={(styles.nav.list, styles.logo.base)}>
-            <Link to="" css={styles.logo.link}>
-              <img src={ProstageLogo} alt="Prostage" css={styles.logo.img} />
-            </Link>
-          </li>
-          {isSignin && (
-            <Fragment>
-              <li css={(styles.nav.list, styles.mypage.base)}>
-                <Link to="/" css={styles.mypage.link}>
-                  マイページ
-                </Link>
-              </li>
-              {/* TODO:CSS調整 */}
-              <li css={(styles.nav.list, styles.mypage.base)}>
-                <Link to="/" css={styles.mypage.link}>
-                  スキル一覧
-                </Link>
-              </li>
-              {/* TODO:CSS調整 */}
-              <li css={(styles.nav.list, styles.mypage.base)}>
-                <Link to="/" css={styles.mypage.link}>
-                  スライド検索
-                </Link>
-              </li>
-              {/* TODO:CSS調整 */}
-              <li css={(styles.nav.list, styles.mypage.base)}>
-                <Link to="/" css={styles.mypage.link}>
-                  コミュニティ
-                </Link>
-              </li>
-              <li css={(styles.nav.list, styles.userMenu.base)}>
-                <Link to="/" css={styles.userMenu.link}>
-                  メニュー(未)
-                </Link>
-              </li>
-              <li css={(styles.nav.list, styles.signout.base)}>
-                <button type="button" onClick={signOut} css={styles.signout.button}>
-                  ログアウト
-                </button>
-              </li>
-              <li css={(styles.nav.list, styles.notice.base)}>
-                <Link to="/" css={styles.notice.link}>
-                  <label css={styles.notice.label}>2</label>
-                  <img src={Notice} alt="notice" css={styles.notice.img} />
-                </Link>
-              </li>
-              <li css={(styles.nav.list, styles.email.base)}>
-                <Link to="/" css={styles.email.link}>
-                  <label css={styles.email.label}>2</label>
-                  <img src={Email} alt="email" css={styles.email.img} />
-                </Link>
-              </li>
-            </Fragment>
-          )}
-          {!isSignin && (
-            <Fragment>
-              <li css={(styles.nav.list, styles.plan.base)}>
-                <Link to="/" css={styles.plan.link}>
-                  法人プラン
-                </Link>
-              </li>
-              <li css={styles.nav.list}>
-                <button
-                  type="button"
-                  css={styles.signinBtn}
-                  onClick={() => {
-                    setModal('signin')
-                  }}
-                >
-                  ログイン
-                </button>
-                {modal === 'signin' && <SignIn />}
-              </li>
-              <li css={styles.nav.list}>
-                <button
-                  type="button"
-                  css={styles.signupBtn}
-                  onClick={() => {
-                    setModal('signup')
-                  }}
-                >
-                  無料会員登録
-                </button>
-                {modal === 'signup' && <SignUp />}
-              </li>
-            </Fragment>
-          )}
-        </ul>
-      </ModalContext.Provider>
+      <ul id="nav" css={styles.nav.base}>
+        <li css={(styles.nav.list, styles.logo.base)}>
+          <Link to="" css={styles.logo.link}>
+            <img src={ProstageLogo} alt="Prostage" css={styles.logo.img} />
+          </Link>
+        </li>
+        {isSignin && (
+          <Fragment>
+            <li css={(styles.nav.list, styles.mypage.base)}>
+              <Link to="/" css={styles.mypage.link}>
+                マイページ
+              </Link>
+            </li>
+            {/* TODO:CSS調整 */}
+            <li css={(styles.nav.list, styles.mypage.base)}>
+              <Link to="/" css={styles.mypage.link}>
+                スキル一覧
+              </Link>
+            </li>
+            {/* TODO:CSS調整 */}
+            <li css={(styles.nav.list, styles.mypage.base)}>
+              <Link to="/" css={styles.mypage.link}>
+                スライド検索
+              </Link>
+            </li>
+            {/* TODO:CSS調整 */}
+            <li css={(styles.nav.list, styles.mypage.base)}>
+              <Link to="/" css={styles.mypage.link}>
+                コミュニティ
+              </Link>
+            </li>
+            <li css={(styles.nav.list, styles.userMenu.base)}>
+              <Link to="/" css={styles.userMenu.link}>
+                メニュー(未)
+              </Link>
+            </li>
+            <li css={(styles.nav.list, styles.signout.base)}>
+              <button type="button" onClick={signOut} css={styles.signout.button}>
+                ログアウト
+              </button>
+            </li>
+            <li css={(styles.nav.list, styles.notice.base)}>
+              <Link to="/" css={styles.notice.link}>
+                <label css={styles.notice.label}>2</label>
+                <img src={Notice} alt="notice" css={styles.notice.img} />
+              </Link>
+            </li>
+            <li css={(styles.nav.list, styles.email.base)}>
+              <Link to="/" css={styles.email.link}>
+                <label css={styles.email.label}>2</label>
+                <img src={Email} alt="email" css={styles.email.img} />
+              </Link>
+            </li>
+          </Fragment>
+        )}
+        {!isSignin && (
+          <Fragment>
+            <li css={(styles.nav.list, styles.plan.base)}>
+              <Link to="/" css={styles.plan.link}>
+                法人プラン
+              </Link>
+            </li>
+            <li css={styles.nav.list}>
+              <button
+                type="button"
+                css={styles.signinBtn}
+                onClick={() => {
+                  setModalState('signin')
+                }}
+              >
+                ログイン
+              </button>
+              {modalMode === 'signin' && <SignIn />}
+            </li>
+            <li css={styles.nav.list}>
+              <button
+                type="button"
+                css={styles.signupBtn}
+                onClick={() => {
+                  setModalState('signup')
+                }}
+              >
+                無料会員登録
+              </button>
+              {modalMode === 'signup' && <SignUp />}
+            </li>
+          </Fragment>
+        )}
+      </ul>
     </header>
   )
 }

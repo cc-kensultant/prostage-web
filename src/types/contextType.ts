@@ -4,6 +4,6 @@ export type user = {
 }
 
 export type modal = {
-  modal: String
+  modalMode: string
   setModalState: (name: string) => void
 }
