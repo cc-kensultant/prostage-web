@@ -42,7 +42,7 @@ export const SignUp: FC = () => {
     }
   }
   return (
-    <Modal close={() => setModalState('')}>
+    <Modal onClose={() => setModalState('')}>
       <article css={styles.article}>
         <button type="button" css={styles.cancel.base} onClick={() => setModalState('')}>
           <img src={Cancel} alt="キャンセル" css={styles.cancel.img} />

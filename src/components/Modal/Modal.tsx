@@ -3,11 +3,11 @@ import { jsx, css } from '@emotion/core'
 import { FC } from 'react'
 
 export type props = {
-  close: () => void
+  onClose: () => void
 }
 
-export const Modal: FC<props> = ({ close, children }) => (
-  <div css={styles.background} onClick={close}>
+export const Modal: FC<props> = ({ onClose, children }) => (
+  <div css={styles.background} onClick={onClose}>
     <div
       css={styles.contents}
       onClick={(e) => {

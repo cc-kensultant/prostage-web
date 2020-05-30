@@ -8,7 +8,7 @@ export default {
 }
 
 export const Default = () => (
-  <Modal close={() => {}}>
+  <Modal onClose={() => {}}>
     <p>dataX</p>
   </Modal>
 )
