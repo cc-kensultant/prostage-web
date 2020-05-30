@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, Fragment } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { SignUp } from './SignUp'
@@ -8,8 +8,11 @@ export default {
   component: SignUp,
 }
 
-export const Default = () => (
-  <Router>
-    <SignUp />
-  </Router>
+export const SignUpModal: FC = () => (
+  <Fragment>
+    <div id="modal"></div>
+    <Router>
+      <SignUp />
+    </Router>
+  </Fragment>
 )
