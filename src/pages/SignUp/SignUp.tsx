@@ -3,7 +3,6 @@ import { jsx, css } from '@emotion/core'
 import React, { FC, useState } from 'react'
 import { firebase } from '../../utils/firebase'
 import { Link, useHistory } from 'react-router-dom'
-import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
@@ -43,24 +42,20 @@ export const SignUp: FC = () => {
   }
   return (
     <main css={styles.base}>
-      {/* TODO:↓ダイアログコンポーネント化？ */}
-      <article css={card.base}>
-        <button type="button" css={card.cancelBase}>
-          <img src={Cancel} alt="キャンセル" />
-        </button>
-        <h1 css={card.title}>アカウントを作成</h1>
-        <p css={card.info}>
+      <article css={styles.contentBase}>
+        <h1 css={styles.title}>アカウントを作成</h1>
+        <p css={styles.info}>
           アカウントを作成することにより、利用規規約及び
           <br />
           プライバシーポリシーに同意するものとします。
         </p>
-        <form css={card.formBase}>
+        <form css={styles.formBase}>
           <input
             type="text"
             name="email"
             value={state.email}
             onChange={handleChange}
-            css={card.email}
+            css={styles.email}
             placeholder="メールアドレス"
           />
           <input
@@ -68,7 +63,7 @@ export const SignUp: FC = () => {
             name="pass"
             value={state.pass}
             onChange={handleChange}
-            css={card.pass}
+            css={styles.pass}
             placeholder="パスワード"
           />
           <input
@@ -76,44 +71,44 @@ export const SignUp: FC = () => {
             name="passConf"
             value={state.passConf}
             onChange={handleChange}
-            css={card.passConf}
+            css={styles.passConf}
             placeholder="確認用パスワード"
           />
           <button
             type="button"
-            css={validation() ? card.btn : css(card.btn, card.btnDisable)}
+            css={validation() ? styles.btn : css(styles.btn, styles.btnDisable)}
             tabIndex={validation() ? 0 : -1}
             onClick={onSubmit}
           >
             新規登録
           </button>
         </form>
-        <div css={card.hrBase}>
-          <hr css={card.hr} />
-          <div css={card.hrInfo}>または</div>
-          <hr css={card.hr} />
+        <div css={styles.hrBase}>
+          <hr css={styles.hr} />
+          <div css={styles.hrInfo}>または</div>
+          <hr css={styles.hr} />
         </div>
         {/* google, facebook, twitter 外部リンク？なのでnavは付けない */}
-        <ul css={card.iconsBase}>
-          <li css={card.google}>
+        <ul css={styles.iconsBase}>
+          <li css={styles.google}>
             <button type="button">
-              <img src={GoogleLogo} alt="Google" css={card.image} />
+              <img src={GoogleLogo} alt="Google" css={styles.image} />
             </button>
           </li>
-          <li css={card.facebook}>
+          <li css={styles.facebook}>
             <button type="button">
-              <img src={FacebookLogo} alt="Facebook" css={card.image} />
+              <img src={FacebookLogo} alt="Facebook" css={styles.image} />
             </button>
           </li>
-          <li css={card.twitter}>
+          <li css={styles.twitter}>
             <button type="button">
-              <img src={TwitterLogo} alt="Twitter" css={card.image} />
+              <img src={TwitterLogo} alt="Twitter" css={styles.image} />
             </button>
           </li>
         </ul>
-        <p css={card.signinInfo}>
+        <p css={styles.signinInfo}>
           すでにアカウントをお持ちですか？
-          <Link css={card.signinLink} to="/sign-in">
+          <Link css={styles.signinLink} to="/sign-in">
             ログイン
           </Link>
         </p>
@@ -132,46 +127,17 @@ const styles = {
     animation: view 0.5s forwards;
     @keyframes view {
       from {
-        transform: scale(0.95);
         opacity: 0;
       }
       to {
-        transform: scale(1);
         opacity: 1;
       }
     }
   `,
-}
-// TODO:↓ダイアログコンポーネント化の際にstylesに名称変更
-const card = {
-  base: css`
+  contentBase: css`
     width: 404px;
     padding: 18px;
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 6px rgb(0, 0, 0, 0.1);
-  `,
-  cancelBase: css`
-    display: block;
-    margin-left: auto;
-    padding: unset;
-    border: none;
-    background: none;
-    img {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      &:hover {
-        opacity: 0.5;
-      }
-    }
-    &:focus {
-      outline: none;
-      img {
-        opacity: 0.5;
-      }
-    }
   `,
   title: css`
     margin-top: -12px;
