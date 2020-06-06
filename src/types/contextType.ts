@@ -1,4 +1,8 @@
-export type user = {
-  isSignin: boolean
-  setUserState: (state: boolean) => void
+import { Dispatch } from 'react'
+
+export type userStoreType = {
+  userState: {
+    isSignin: boolean
+  }
+  dispatch: Dispatch<any>
 }

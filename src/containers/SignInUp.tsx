@@ -3,12 +3,13 @@ import { jsx, css } from '@emotion/core'
 import React, { FC, useState, useEffect, Fragment } from 'react'
 import { firebase } from '../utils/firebase'
 import { useHistory } from 'react-router-dom'
-import { UserContext } from '../contexts/user'
+import { UserStore } from '../contexts/userStore'
 import { SignIn } from '../components/SignIn'
 import { SignUp } from '../components/SignUp'
 
 export const SignInUpContainer: FC = () => {
-  const { setUserState } = React.useContext(UserContext)
+  const { userState, dispatch } = React.useContext(UserStore)
+  const history = useHistory()
   const [isSignInOpen, setSignInModal] = useState(false)
   const [isSignUpOpen, setSignUpModal] = useState(false)
   const [signInState, setSignInState] = useState({
@@ -22,7 +23,6 @@ export const SignInUpContainer: FC = () => {
   })
   const [signInValidate, setSignInValidate] = useState(false)
   const [signUpValidate, setSignUpValidate] = useState(false)
-  const history = useHistory()
   const onSignInOpen = () => {
     setSignInModal(true)
   }
@@ -30,19 +30,19 @@ export const SignInUpContainer: FC = () => {
     setSignUpModal(true)
   }
   const onSignInClose = () => {
-    setSignInModal(false)
     setSignInState({
       email: '',
       pass: '',
     })
+    setSignInModal(false)
   }
   const onSignUpClose = () => {
-    setSignUpModal(false)
     setSignUpState({
       email: '',
       pass: '',
       passConf: '',
     })
+    setSignUpModal(false)
   }
   const onSignInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSignInState({ ...signInState, [event.target.name]: event.target.value })
@@ -57,10 +57,13 @@ export const SignInUpContainer: FC = () => {
       // TODO: IDトークンの取得/保持 firebase.auth().currentUser.getIdToken()
       // TODO:トースト通知など検討
       alert('ログインに成功しました。')
-      setUserState(true)
-      setSignInModal(false)
+      if (userState.isSignin) return
+      dispatch({
+        type: 'SIGN_IN',
+      })
+      onSignInClose()
       // TODO:ログイン後ページに移動
-      history.push('/')
+      history.push('/sign-in')
     } catch {
       // TODO:トースト通知など検討
       alert('ログインに失敗しました。')
@@ -72,10 +75,13 @@ export const SignInUpContainer: FC = () => {
       await firebase.auth().createUserWithEmailAndPassword(signUpstate.email, signUpstate.pass)
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
-      setUserState(true)
-      setSignUpModal(false)
+      if (userState.isSignin) return
+      dispatch({
+        type: 'SIGN_IN',
+      })
+      onSignUpClose()
       // TODO:新規登録後ページに移動
-      history.push('/')
+      history.push('/sign-up')
     } catch {
       // TODO:トースト通知など検討
       alert('アカウント登録に失敗しました。')
@@ -90,20 +96,15 @@ export const SignInUpContainer: FC = () => {
     onSignInOpen()
   }
   useEffect(() => {
-    if (isSignInOpen) setSignInValidate(signInState.email !== '' && signInState.pass !== '')
-    if (isSignUpOpen)
-      setSignUpValidate(
-        signUpstate.email !== '' && signUpstate.pass !== '' && signUpstate.passConf !== '',
-      )
-  }, [
-    isSignInOpen,
-    isSignUpOpen,
-    signInState.email,
-    signInState.pass,
-    signUpstate.email,
-    signUpstate.pass,
-    signUpstate.passConf,
-  ])
+    if (userState.isSignin) return
+    setSignInValidate(signInState.email !== '' && signInState.pass !== '')
+  }, [signInState.email, signInState.pass, userState.isSignin])
+  useEffect(() => {
+    if (userState.isSignin) return
+    setSignUpValidate(
+      signUpstate.email !== '' && signUpstate.pass !== '' && signUpstate.passConf !== '',
+    )
+  }, [signUpstate.email, signUpstate.pass, signUpstate.passConf, userState.isSignin])
   return (
     <Fragment>
       <li css={styles.nav.list}>

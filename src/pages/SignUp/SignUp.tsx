@@ -6,14 +6,14 @@ import { Link, useHistory } from 'react-router-dom'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { UserContext } from '../../contexts/user'
+import { UserStore } from '../../contexts/userStore'
 
 export type AppProps = {
   setUserState: (state: boolean) => void
 }
 
 export const SignUp: FC = () => {
-  const { setUserState } = React.useContext(UserContext)
+  const { userState, dispatch } = React.useContext(UserStore)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -27,12 +27,15 @@ export const SignUp: FC = () => {
     return state.email && state.pass && state.passConf
   }
   const onSubmit = async () => {
+    if (userState.isSignin) return
     if (!validation()) return
     try {
       await firebase.auth().createUserWithEmailAndPassword(state.email, state.pass)
       // TODO:トースト通知など検討
       alert('アカウント登録に成功しました。')
-      setUserState(true)
+      dispatch({
+        type: 'SIGN_IN',
+      })
       // TODO:新規登録後ページに移動
       history.push('/')
     } catch {

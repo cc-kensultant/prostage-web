@@ -8,7 +8,7 @@ import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
 import { Modal } from '../Modal'
 
-export type signInProps = {
+type signInProps = {
   isOpen: boolean
   onClose: () => void
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void

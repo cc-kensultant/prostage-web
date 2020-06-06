@@ -1,31 +1,37 @@
 /** @jsx jsx */
-import { useState, useEffect } from 'react'
+import { useEffect, useReducer } from 'react'
 import { GlobalMenuContainer } from './containers/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
 import { firebase } from './utils/firebase'
+import { userReducer } from './utils/reducer'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { jsx } from '@emotion/core'
-import { UserContext } from './contexts/user'
+import { UserStore } from './contexts/userStore'
+
+const initialize = {
+  isSignin: false,
+}
 
 const App = () => {
-  const [user, setUser] = useState(false)
-  const setUserState = (state: boolean) => {
-    setUser(state)
-  }
+  const [userState, dispatch] = useReducer(userReducer, initialize)
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userData) => {
       if (userData) {
-        setUser(true)
+        dispatch({
+          type: 'SIGN_IN',
+        })
       } else {
-        setUser(false)
+        dispatch({
+          type: 'SIGN_OUT',
+        })
       }
     })
   }, [])
   return (
     <Router>
-      <UserContext.Provider value={{ isSignin: user, setUserState }}>
+      <UserStore.Provider value={{ userState, dispatch }}>
         <GlobalMenuContainer />
         {/*
           A <Switch> looks through all its children <Route>
@@ -45,7 +51,7 @@ const App = () => {
             <SignUp />
           </Route>
         </Switch>
-      </UserContext.Provider>
+      </UserStore.Provider>
     </Router>
   )
 }

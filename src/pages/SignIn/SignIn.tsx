@@ -6,10 +6,10 @@ import { Link, useHistory } from 'react-router-dom'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { UserContext } from '../../contexts/user'
+import { UserStore } from '../../contexts/userStore'
 
 export const SignIn: FC = () => {
-  const { setUserState } = React.useContext(UserContext)
+  const { userState, dispatch } = React.useContext(UserStore)
   const [state, setState] = useState({
     email: '',
     pass: '',
@@ -22,13 +22,16 @@ export const SignIn: FC = () => {
     return state.email && state.pass
   }
   const onSubmit = async () => {
+    if (userState.isSignin) return
     if (!validation()) return
     try {
       await firebase.auth().signInWithEmailAndPassword(state.email, state.pass)
       // TODO: IDトークンの取得/保持 firebase.auth().currentUser.getIdToken()
       // TODO:トースト通知など検討
       alert('ログインに成功しました。')
-      setUserState(true)
+      dispatch({
+        type: 'SIGN_IN',
+      })
       // TODO:ログイン後ページに移動
       history.push('/')
     } catch {
