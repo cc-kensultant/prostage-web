@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { FC, useState, Fragment } from 'react'
-import { action } from '@storybook/addon-actions'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { Modal } from './Modal'
@@ -27,7 +26,7 @@ export const ModalOpen: FC = () => {
           modal open
         </button>
         {isOpen && (
-          <Modal onClose={action('button-click')}>
+          <Modal onClose={() => setModal(false)}>
             <p css={styles.article}>汎用モーダル</p>
           </Modal>
         )}

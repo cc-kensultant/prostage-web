@@ -1,30 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import React, { FC, Fragment } from 'react'
+import { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { firebase } from '../../utils/firebase'
 import ProstageLogo from '../../images/ProstageLogo.svg'
 import Notice from '../../images/notifications_none_24px.svg'
-import Email from '../../images/mail_outline_24px.svg'
-import { UserContext } from '../../contexts/user'
-import { SignIn } from '../SignIn'
-import { SignUp } from '../SignUp'
+import { SignInUpContainer } from '../../containers/SignInUp'
 
-export const GlobalMenu: FC = () => {
-  const { isSignin, setUserState } = React.useContext(UserContext)
-  const signOut = () => {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        try {
-          await firebase.auth().signOut()
-          alert('ログアウトしました')
-          setUserState(false)
-        } catch {
-          alert('ログアウトに失敗しました')
-        }
-      }
-    })
-  }
+export type menuProps = {
+  isSignin: boolean
+  onSignOut: () => void
+}
+
+export const GlobalMenu: FC<menuProps> = ({ isSignin, onSignOut }) => {
   return (
     <header css={styles.base}>
       <ul id="nav" css={styles.nav.base}>
@@ -46,25 +33,13 @@ export const GlobalMenu: FC = () => {
                 スキル一覧
               </Link>
             </li>
-            {/* TODO:CSS調整 */}
-            <li css={(styles.nav.list, styles.mypage.base)}>
-              <Link to="/" css={styles.mypage.link}>
-                スライド検索
-              </Link>
-            </li>
-            {/* TODO:CSS調整 */}
-            <li css={(styles.nav.list, styles.mypage.base)}>
-              <Link to="/" css={styles.mypage.link}>
-                コミュニティ
-              </Link>
-            </li>
             <li css={(styles.nav.list, styles.userMenu.base)}>
               <Link to="/" css={styles.userMenu.link}>
                 メニュー(未)
               </Link>
             </li>
             <li css={(styles.nav.list, styles.signout.base)}>
-              <button type="button" onClick={signOut} css={styles.signout.button}>
+              <button type="button" onClick={onSignOut} css={styles.signout.button}>
                 ログアウト
               </button>
             </li>
@@ -72,12 +47,6 @@ export const GlobalMenu: FC = () => {
               <Link to="/" css={styles.notice.link}>
                 <label css={styles.notice.label}>2</label>
                 <img src={Notice} alt="notice" css={styles.notice.img} />
-              </Link>
-            </li>
-            <li css={(styles.nav.list, styles.email.base)}>
-              <Link to="/" css={styles.email.link}>
-                <label css={styles.email.label}>2</label>
-                <img src={Email} alt="email" css={styles.email.img} />
               </Link>
             </li>
           </Fragment>
@@ -89,12 +58,7 @@ export const GlobalMenu: FC = () => {
                 法人プラン
               </Link>
             </li>
-            <li css={styles.nav.list}>
-              <SignIn />
-            </li>
-            <li css={styles.nav.list}>
-              <SignUp />
-            </li>
+            <SignInUpContainer />
           </Fragment>
         )}
       </ul>
@@ -212,43 +176,6 @@ const styles = {
     `,
   },
   notice: {
-    base: css`
-      margin-left: 8px;
-      cursor: pointer;
-    `,
-    link: css`
-      display: block;
-      height: 34px;
-      position: relative;
-      border-radius: 17px;
-      &:focus {
-        outline: none;
-        background: #f3f3f3;
-      }
-    `,
-    label: css`
-      position: absolute;
-      z-index: 1;
-      top: -3px;
-      right: -3px;
-      background: #ff0000;
-      width: 20px;
-      height: 20px;
-      text-align: center;
-      line-height: 20px;
-      border-radius: 10px;
-      font-family: Mplus 1p;
-      font-size: 14px;
-      color: #ffffff;
-    `,
-    img: css`
-      padding: 5px;
-      width: 24px;
-      height: 24px;
-      opacity: 0.54;
-    `,
-  },
-  email: {
     base: css`
       margin-left: 8px;
       cursor: pointer;

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { useState, useEffect } from 'react'
-import { GlobalMenu } from './components/GlobalMenu'
+import { GlobalMenuContainer } from './containers/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
@@ -26,7 +26,7 @@ const App = () => {
   return (
     <Router>
       <UserContext.Provider value={{ isSignin: user, setUserState }}>
-        <GlobalMenu />
+        <GlobalMenuContainer />
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path

@@ -1,60 +1,35 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import React, { FC, useState, Fragment } from 'react'
-import { firebase } from '../../utils/firebase'
-import { useHistory } from 'react-router-dom'
+import React, { FC, Fragment } from 'react'
 import Cancel from '../../images/Cancel.svg'
 import GoogleLogo from '../../images/GoogleLogo.svg'
 import FacebookLogo from '../../images/FacebookLogo.svg'
 import TwitterLogo from '../../images/TwitterLogo.svg'
-import { UserContext } from '../../contexts/user'
 import { Modal } from '../Modal'
 
-export const SignUp: FC = () => {
-  const { setUserState } = React.useContext(UserContext)
-  const [isOpen, setModal] = useState(false)
-  const [state, setState] = useState({
-    email: '',
-    pass: '',
-    passConf: '',
-  })
-  const history = useHistory()
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.value })
-  }
-  const validation = () => {
-    return state.email && state.pass && state.passConf
-  }
-  const onSubmit = async () => {
-    if (!validation()) return
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(state.email, state.pass)
-      // TODO:トースト通知など検討
-      alert('アカウント登録に成功しました。')
-      setUserState(true)
-      setModal(false)
-      // TODO:新規登録後ページに移動
-      history.push('/')
-    } catch {
-      // TODO:トースト通知など検討
-      alert('アカウント登録に失敗しました。')
-    }
-  }
+export type signUpProps = {
+  isOpen: boolean
+  onClose: () => void
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  isValidate: boolean
+  onSubmit: () => void
+  onSignInLink: () => void
+}
+
+export const SignUp: FC<signUpProps> = ({
+  isOpen,
+  onClose,
+  onChange,
+  isValidate,
+  onSubmit,
+  onSignInLink,
+}) => {
   return (
     <Fragment>
-      <button
-        type="button"
-        css={styles.signupBtn}
-        onClick={() => {
-          setModal(true)
-        }}
-      >
-        無料会員登録
-      </button>
       {isOpen && (
-        <Modal onClose={() => setModal(false)}>
+        <Modal onClose={onClose}>
           <article css={styles.article}>
-            <button type="button" css={styles.cancel.base} onClick={() => setModal(false)}>
+            <button type="button" css={styles.cancel.base} onClick={onClose}>
               <img src={Cancel} alt="キャンセル" css={styles.cancel.img} />
             </button>
             <h1 css={styles.title}>アカウントを作成</h1>
@@ -67,32 +42,29 @@ export const SignUp: FC = () => {
               <input
                 type="text"
                 name="email"
-                value={state.email}
-                onChange={handleChange}
+                onChange={onChange}
                 css={styles.form.email}
                 placeholder="メールアドレス"
               />
               <input
                 type="password"
                 name="pass"
-                value={state.pass}
-                onChange={handleChange}
+                onChange={onChange}
                 css={styles.form.pass}
                 placeholder="パスワード"
               />
               <input
                 type="password"
                 name="passConf"
-                value={state.passConf}
-                onChange={handleChange}
+                onChange={onChange}
                 css={styles.form.passConf}
                 placeholder="確認用パスワード"
               />
               <button
                 type="button"
-                css={validation() ? styles.form.btn : css(styles.form.btn, styles.form.btnDisable)}
-                tabIndex={validation() ? 0 : -1}
-                onClick={onSubmit}
+                css={isValidate ? styles.form.btn : css(styles.form.btn, styles.form.btnDisable)}
+                tabIndex={isValidate ? 0 : -1}
+                onClick={isValidate ? onSubmit : () => {}}
               >
                 新規登録
               </button>
@@ -122,7 +94,7 @@ export const SignUp: FC = () => {
             </ul>
             <p css={styles.signin.text}>
               すでにアカウントをお持ちですか？
-              <button css={styles.signin.link} type="button" onClick={() => setModal(true)}>
+              <button css={styles.signin.link} type="button" onClick={onSignInLink}>
                 ログイン
               </button>
             </p>
@@ -134,30 +106,6 @@ export const SignUp: FC = () => {
 }
 
 const styles = {
-  signupBtn: css`
-    display: block;
-    text-align: center;
-    text-decoration: unset;
-    width: 169px;
-    height: 34px;
-    background: #1890ff;
-    border-radius: 3px;
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 34px;
-    letter-spacing: 0.1em;
-    color: #fffdfd;
-    cursor: pointer;
-    border: unset;
-    transition: background 0.2s;
-    outline: none;
-    &:focus {
-      background: #096dd9;
-    }
-    &:hover {
-      background: #096dd9;
-    }
-  `,
   article: css`
     width: 404px;
     padding: 18px;

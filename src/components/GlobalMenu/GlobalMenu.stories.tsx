@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react'
-import { UserContext } from '../../contexts/user'
+import { action } from '@storybook/addon-actions'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { GlobalMenu } from './GlobalMenu'
@@ -9,28 +9,22 @@ export default {
   component: GlobalMenu,
 }
 export const LoggedIn: FC = () => {
-  const setUserState = () => {}
   return (
     <Fragment>
       <div id="modal"></div>
       <Router>
-        <UserContext.Provider value={{ isSignin: true, setUserState }}>
-          <GlobalMenu />
-        </UserContext.Provider>
+        <GlobalMenu isSignin={true} onSignOut={action('button-click')} />
       </Router>
     </Fragment>
   )
 }
 
 export const LoggedOut: FC = () => {
-  const setUserState = () => {}
   return (
     <Fragment>
       <div id="modal"></div>
       <Router>
-        <UserContext.Provider value={{ isSignin: false, setUserState }}>
-          <GlobalMenu />
-        </UserContext.Provider>
+        <GlobalMenu isSignin={false} onSignOut={action('button-click')} />
       </Router>
     </Fragment>
   )
