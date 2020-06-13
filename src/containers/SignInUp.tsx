@@ -63,7 +63,8 @@ export const SignInUpContainer: FC = () => {
       })
       onSignInClose()
       // TODO:ログイン後ページに移動
-      history.push('/sign-in')
+      // TODO:モーダルからだと遷移できない？ルート経由ではないため？要調査
+      history.push('/dashboard')
     } catch {
       // TODO:トースト通知など検討
       alert('ログインに失敗しました。')
@@ -81,7 +82,7 @@ export const SignInUpContainer: FC = () => {
       })
       onSignUpClose()
       // TODO:新規登録後ページに移動
-      history.push('/sign-up')
+      history.push('/dashboard')
     } catch {
       // TODO:トースト通知など検討
       alert('アカウント登録に失敗しました。')

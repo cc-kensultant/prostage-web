@@ -32,8 +32,7 @@ export const SignIn: FC = () => {
       dispatch({
         type: 'SIGN_IN',
       })
-      // TODO:ログイン後ページに移動
-      history.push('/')
+      history.push('/dashboard')
     } catch {
       // TODO:トースト通知など検討
       alert('ログインに失敗しました。')
