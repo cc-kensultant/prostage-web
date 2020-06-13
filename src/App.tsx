@@ -4,6 +4,7 @@ import { GlobalMenuContainer } from './containers/GlobalMenu'
 import { Top } from './pages/Top'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
+import { Dashboard } from './pages/Dashboard'
 import { firebase } from './utils/firebase'
 import { userReducer } from './utils/reducer'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -49,6 +50,9 @@ const App = () => {
           </Route>
           <Route exact path="/sign-up">
             <SignUp />
+          </Route>
+          <Route exact path="/dashboard">
+            <Dashboard />
           </Route>
         </Switch>
       </UserStore.Provider>
