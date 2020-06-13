@@ -20,7 +20,7 @@ const styles = {
   cover: {
     button: css`
       position: relative;
-      width: 100%;
+      width: 100vw;
       max-height: 300px;
       cursor: pointer;
       border: none;
@@ -39,8 +39,8 @@ const styles = {
     `,
     img: css`
       transition: opacity 0.2s;
-      width: 100%;
-      height: auto;
+      width: 100vw;
+      max-height: 300px;
     `,
     icon: css`
       transition: display 0.2s;

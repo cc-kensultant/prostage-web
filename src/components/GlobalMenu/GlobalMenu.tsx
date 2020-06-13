@@ -68,6 +68,7 @@ export const GlobalMenu: FC<menuProps> = ({ isSignin, onSignOut }) => {
 
 const styles = {
   base: css`
+    width: 100vw;
     position: sticky;
     top: 0;
     background: #fff;
