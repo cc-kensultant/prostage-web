@@ -4,6 +4,7 @@ import { FC, useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { CoverImageContainer } from '../../containers/CoverImage'
 import { UserIconContainer } from '../../containers/UserIcon'
+import { LearningProgressContainer } from '../../containers/LearningProgress'
 import BookIcon from '../../images/library_books-24px.svg'
 
 export const Dashboard: FC = () => {
@@ -40,6 +41,35 @@ export const Dashboard: FC = () => {
         {tabNum === 0 && (
           <Fragment>
             <h2 css={styles.achievement.title}>達成度</h2>
+            <ul css={styles.achievement.table.base}>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={0} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={1} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={2} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={3} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={4} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={5} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={6} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={7} />
+              </li>
+              <li css={styles.achievement.table.items}>
+                <LearningProgressContainer menuIndex={8} />
+              </li>
+            </ul>
             <h2 css={styles.continued.title}>前回の続き</h2>
             <h2 css={styles.learning.title}>学習中のコース</h2>
           </Fragment>
@@ -55,7 +85,7 @@ const styles = {
   `,
   userInfo: {
     base: css`
-      padding: 0 15vw;
+      padding: 0 10vw;
     `,
     icon: css`
       margin-top: -80px;
@@ -93,7 +123,7 @@ const styles = {
   tabs: {
     base: css`
       margin-top: 28px;
-      padding: 0 15vw;
+      padding: 0 10vw;
     `,
     item_enable: css`
       width: 138px;
@@ -130,11 +160,12 @@ const styles = {
   `,
   content: {
     base: css`
-      padding: 0 15vw;
+      padding: 0 10vw;
     `,
   },
   achievement: {
     title: css`
+      padding-top: 24px;
       font-family: Mplus 1p;
       font-style: normal;
       font-weight: normal;
@@ -142,6 +173,22 @@ const styles = {
       line-height: 27px;
       color: #10202d;
     `,
+    table: {
+      base: css`
+        margin-top: 20px;
+        width: 100%;
+        display: -webkit-flex;
+        display: flex;
+        list-style-type: none;
+        padding: unset;
+        justify-content: space-between;
+      `,
+      items: css`
+        display: block;
+        text-align: center;
+        text-decoration: none;
+      `,
+    },
   },
   continued: {
     title: css`
