@@ -21,7 +21,6 @@ const styles = {
     button: css`
       position: relative;
       width: 100vw;
-      max-height: 300px;
       cursor: pointer;
       border: none;
       background: #000;
@@ -40,7 +39,6 @@ const styles = {
     img: css`
       transition: opacity 0.2s;
       width: 100vw;
-      max-height: 300px;
     `,
     icon: css`
       transition: display 0.2s;
