@@ -6,6 +6,7 @@ import { CoverImageContainer } from '../../containers/CoverImage'
 import { UserIconContainer } from '../../containers/UserIcon'
 import { LearningProgressContainer } from '../../containers/LearningProgress'
 import { ContinuedItemContainer } from '../../containers/ContinuedItem'
+import { LearningCourseContainer } from '../../containers/LearningCourse'
 import BookIcon from '../../images/library_books-24px.svg'
 
 export const Dashboard: FC = () => {
@@ -74,6 +75,9 @@ export const Dashboard: FC = () => {
             <h2 css={styles.continued.title}>前回の続き</h2>
             <ContinuedItemContainer />
             <h2 css={styles.learning.title}>学習中のコース</h2>
+            <div css={styles.learning.flex}>
+              <LearningCourseContainer menuIndex={2} />
+            </div>
           </Fragment>
         )}
       </div>
@@ -206,12 +210,17 @@ const styles = {
   learning: {
     title: css`
       margin-top: 62px;
+      margin-bottom: 20px;
       font-family: Mplus 1p;
       font-style: normal;
       font-weight: normal;
       font-size: 18px;
       line-height: 27px;
       color: #10202d;
+    `,
+    flex: css`
+      margin-bottom: 48px;
+      display: flex;
     `,
   },
 }
