@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { CoverImageContainer } from '../../containers/CoverImage'
 import { UserIconContainer } from '../../containers/UserIcon'
 import { LearningProgressContainer } from '../../containers/LearningProgress'
+import { ContinuedItemContainer } from '../../containers/ContinuedItem'
 import BookIcon from '../../images/library_books-24px.svg'
 
 export const Dashboard: FC = () => {
@@ -71,6 +72,7 @@ export const Dashboard: FC = () => {
               </li>
             </ul>
             <h2 css={styles.continued.title}>前回の続き</h2>
+            <ContinuedItemContainer />
             <h2 css={styles.learning.title}>学習中のコース</h2>
           </Fragment>
         )}
@@ -192,6 +194,7 @@ const styles = {
   },
   continued: {
     title: css`
+      margin-top: 62px;
       font-family: Mplus 1p;
       font-style: normal;
       font-weight: normal;
@@ -202,6 +205,7 @@ const styles = {
   },
   learning: {
     title: css`
+      margin-top: 62px;
       font-family: Mplus 1p;
       font-style: normal;
       font-weight: normal;
