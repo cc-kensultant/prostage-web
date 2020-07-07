@@ -1,49 +1,39 @@
 /** @jsx jsx */
-// import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { useEffect, useReducer } from 'react'
+import { GlobalMenuContainer } from './containers/GlobalMenu'
 import { Top } from './pages/Top'
+import { SignIn } from './pages/SignIn'
+import { SignUp } from './pages/SignUp'
+import { Dashboard } from './pages/Dashboard'
+import { firebase } from './utils/firebase'
+import { userReducer } from './utils/reducer'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { jsx } from '@emotion/core'
+import { UserStore } from './contexts/userStore'
 
-import { jsx, css } from '@emotion/core'
-
-const style = css`
-  color: red;
-  border: 2px solid #fff;
-`
-
-const About = () => {
-  return (
-    <div>
-      <h2 css={style}>About</h2>
-    </div>
-  )
-}
-
-const Dashboard = () => {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  )
+const initialize = {
+  isSignin: false,
 }
 
 const App = () => {
+  const [userState, dispatch] = useReducer(userReducer, initialize)
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((userData) => {
+      if (userData) {
+        dispatch({
+          type: 'SIGN_IN',
+        })
+      } else {
+        dispatch({
+          type: 'SIGN_OUT',
+        })
+      }
+    })
+  }, [])
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Top</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-
-        <hr />
-
+      <UserStore.Provider value={{ userState, dispatch }}>
+        <GlobalMenuContainer />
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
@@ -55,14 +45,17 @@ const App = () => {
           <Route exact path="/">
             <Top />
           </Route>
-          <Route path="/about">
-            <About />
+          <Route exact path="/sign-in">
+            <SignIn />
           </Route>
-          <Route path="/dashboard">
+          <Route exact path="/sign-up">
+            <SignUp />
+          </Route>
+          <Route exact path="/dashboard">
             <Dashboard />
           </Route>
         </Switch>
-      </div>
+      </UserStore.Provider>
     </Router>
   )
 }

@@ -10,7 +10,8 @@ ignore: []
 # `{{ input | pascal }}/index.tsx`
 
 ```javascript
-export { {{ input | pascal }} } from './{{ input | pascal }}';
+export { {{ input | pascal }} } from './{{ input | pascal }}'
+
 ```
 
 # `{{ input | pascal }}/{{ input | pascal }}.tsx`
@@ -18,18 +19,22 @@ export { {{ input | pascal }} } from './{{ input | pascal }}';
 ```javascript
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { FC } from 'react'
 
 export type Props = {
-  children: JSX.Element,
+  hoge: String
 }
+
+export const {{ input | pascal }}: FC<Props> = ({ hoge, children }) => (
+  <div css={style}>
+    {hoge} {children ? `| ${children}` : ''}
+  </div>
+)
 
 const style = css`
   color: red;
 `
 
-export const {{ input | pascal }} = ({ children }: Props) => (
-  <div css={style}>{children}</div>
-);
 ```
 
 # `{{ input | pascal }}/{{ input | pascal }}.stories.tsx`
@@ -49,6 +54,8 @@ export default {
 }
 
 export const Default = () => (
-  <{{ input | pascal }}><p>dataX</p></{{ input | pascal }}>
+  <{{ input | pascal }} hoge="hogehoge">
+    <p>dataX</p>
+  </{{ input | pascal }}>
 )
 ```
