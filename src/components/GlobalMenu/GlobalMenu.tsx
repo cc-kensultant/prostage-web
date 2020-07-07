@@ -68,11 +68,12 @@ export const GlobalMenu: FC<menuProps> = ({ isSignin, onSignOut }) => {
 
 const styles = {
   base: css`
+    width: 100vw;
     position: sticky;
     top: 0;
     background: #fff;
     box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.12);
-    z-index: 1;
+    z-index: 2;
   `,
   nav: {
     base: css`
