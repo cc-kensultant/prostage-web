@@ -30,7 +30,7 @@
     "@storybook/addon-viewport": "^5.3.19",
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "^5.3.18",
+    "@storybook/react": "^5.3.19",
     "@types/storybook__addon-info": "^5.2.1",
     "babel-plugin-emotion": "^10.0.33",
     "eslint-config-prettier": "^6.11.0",
