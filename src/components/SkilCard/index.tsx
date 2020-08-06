@@ -1,0 +1,1 @@
+export { SkilCard } from './SkilCard'
